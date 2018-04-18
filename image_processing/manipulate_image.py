@@ -1,8 +1,6 @@
 import numpy as np
 import base64
-from skimage import data, color, img_as_float
 from scipy import misc
-import matplotlib.pyplot as plt
 from PIL import Image
 
 def image_to_string(filename):
@@ -25,6 +23,4 @@ def numpy_to_pic(np_array, filename):
     img = Image.fromarray(np_array, 'RGB')
     img.save(filename)
 
-np_array = pic_to_numpy('go_bobcats.jpg')
-numpy_to_pic(np_array, 'my1.png')
-#print(image_edge())
+
