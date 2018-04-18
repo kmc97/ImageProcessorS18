@@ -1,10 +1,15 @@
+import numpy as np
 import base64
-from skimage import data, io, filters
+from skimage import data, color, img_as_float
+from scipy import misc
+import matplotlib.pyplot as plt
+from PIL import Image
 
 def image_to_string(filename):
     with open(filename, "rb") as image_file:
         image_string = base64.b64encode(image_file.read())
-        return image_string
+        image_np = np.array(image_string)
+        return image_np
 
 def string_to_image(base64string, new_file_name):
 # just change the extensions for picture
@@ -12,5 +17,14 @@ def string_to_image(base64string, new_file_name):
         image_out.write(base64.b64decode(base64string))
 
 
-string = image_to_string('go_bobcats.jpg')
-string_to_image(string,'bobkittens.tiff')
+def pic_to_numpy(temp_file):
+    np_array = misc.imread(temp_file)
+    return np_array
+
+def numpy_to_pic(np_array, filename):
+    img = Image.fromarray(np_array, 'RGB')
+    img.save(filename)
+
+np_array = pic_to_numpy('go_bobcats.jpg')
+numpy_to_pic(np_array, 'my1.png')
+#print(image_edge())
