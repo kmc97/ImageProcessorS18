@@ -20,7 +20,8 @@ def pic_to_numpy(temp_file):
     return np_array
 
 def numpy_to_pic(np_array, filename):
-    img = Image.fromarray(np_array, 'RGB')
+    img = Image.fromarray(np_array)
     img.save(filename)
 
-
+#pic = pic_to_numpy('UCL.jpg')
+#numpy_to_pic(pic,'test.jpg')
