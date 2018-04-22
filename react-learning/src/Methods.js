@@ -13,6 +13,17 @@ const names = [
   'Reverse Video'
 ];
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps:{
+    style:{
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 export default class Methods extends React.Component {
   state = {
     name: [],
@@ -24,14 +35,21 @@ export default class Methods extends React.Component {
 
   render () {
     return (
-      <div>
+      <div style ={{
+        marginLeft: "100px",
+        marginTop: "50px",
+        marginBottom: "10px",
+      }}>
         <FormControl>
-          <InputLabel htmlFor="select-multiple-checkbox">Choose One or More Methods</InputLabel>
+            <InputLabel htmlFor="select-multiple-checkbox">
+                Choose One or More Methods
+            </InputLabel>
           <Select
             multiple
             value={this.state.name}
             onChange={this.handleChange}
             input={<Input id="select-multiple-checkbox" />}
+            MenuProps={MenuProps}
             renderValue={selected => selected.join(', ')}
           >
             {names.map(name => (

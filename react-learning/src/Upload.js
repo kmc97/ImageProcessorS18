@@ -30,11 +30,9 @@ class Upload extends Component {
 				<UploadField onFiles={this.onUpload}>
 					<div style={{
 							backgroundColor: 'blue', 
-							width:'120px', 
-							height:'20px',
 							textAlign: 'center',
-              marginLeft: "100px",
-              marginTop: "10px"
+              marginLeft: "150px",
+              marginTop: "10px",
           }}>
 						Choose File
 					</div>	
