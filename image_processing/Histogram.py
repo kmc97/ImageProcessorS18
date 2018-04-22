@@ -32,5 +32,7 @@ def pic_histo(img, axes, bins=256):
     img_cdf, bins = exposure.cumulative_distribution(img, bins)
     ax_cdf.plot(bins, img_cdf, 'r')
     ax_cdf.set_yticks([])
+    
 
     return ax_img, ax_hist, ax_cdf
+

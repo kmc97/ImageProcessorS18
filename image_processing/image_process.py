@@ -20,3 +20,6 @@ def adaptive_equalization(pic_as_numpy):
     img_adapt = exposure.equalize_adapthist(pic_as_numpy, clip_limit = 0.03)
     return img_adapt
 
+def invert(pic_as_numpy):
+    inverted = np.invert(pic_as_numpy)
+    return inverted
