@@ -3,7 +3,7 @@ import './App.css';
 import Title from "./Title.js";
 import Upload from "./Upload.js";
 import Methods from "./Methods.js";
-import Name from "./Name.js";
+import Identifier from "./Identifier.js";
 import Submit from "./Submit.js"
 
 class App extends Component {
@@ -12,7 +12,7 @@ class App extends Component {
       <div>
         <Title />
         <Upload />
-        <Name />
+        <Identifier />
         <Methods />
         <Submit />
       </div>
