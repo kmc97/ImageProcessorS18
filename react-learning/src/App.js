@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import Title from "./Title.js";
-//import Image from "./Images.js";
 import Upload from "./Upload.js";
+import Methods from "./Methods.js";
+import Name from "./Name.js";
+import Submit from "./Submit.js"
 
 class App extends Component {
   render() {
@@ -10,6 +12,9 @@ class App extends Component {
       <div>
         <Title />
         <Upload />
+        <Name />
+        <Methods />
+        <Submit />
       </div>
     );
   }
