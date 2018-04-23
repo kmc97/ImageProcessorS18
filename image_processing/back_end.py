@@ -28,7 +28,7 @@ def process_contrast_stretch(UUID, b64_string, export_file_type):
     contrast = contrast_stretching(img_np)
     metrics = pic_metrics(contrast)
     display_histogram(contrast, UUID + export_file_type)
-    b64_p = image_to_b64(UUID, UUID + export_file_type)
+    b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
     b64_processed =  [UUID, 'contrast stretching', dur_process, metrics, b64_p]
     return b64_processed
@@ -53,7 +53,7 @@ def process_adapt_equalization(UUID, b64_string, export_file_type):
     adapt_eq = adaptive_equalization(img_np)
     metrics = pic_metrics(adapt_eq)
     display_histogram(adapt_eq, UUID + export_file_type)
-    b64_p = image_to_b64(UUID, UUID + export_file_type)
+    b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
     b64_processed =  [UUID, 'adaptive equalization', dur_process, metrics, b64_p]
     return b64_processed
@@ -78,7 +78,7 @@ def process_histogram_equalization(UUID, b64_string, export_file_type):
     histo = histogram_equalization(img_np)
     metrics = pic_metrics(histo)
     display_histogram(histo, UUID + export_file_type)
-    b64_p = image_to_b64(UUID, UUID + export_file_type)
+    b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
     b64_processed =  [UUID, 'histogram equalization', dur_process, metrics, b64_p]
     return b64_processed
@@ -106,7 +106,7 @@ def process_reverse_image(UUID, b64_string, export_file_type):
     rev_image = invert(img_np)
     metrics = pic_metrics(rev_image)
     display_histogram(rev_image, UUID + export_file_type)
-    b64_p = image_to_b64(UUID, UUID + export_file_type)
+    b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
     b64_processed =  [UUID, 'reverse video', dur_process, metrics, b64_p]
     return b64_processed

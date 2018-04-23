@@ -4,10 +4,9 @@ from scipy import misc
 from PIL import Image
 import logging
 
-def image_to_b64(UUID, filename):
+def image_to_b64(filename):
     """ Function transforms image to b64
    
-    :param UUID: unique identifier, guess we dont really need this but why not
     :param filename: image to be transformed to b64
     :returns image_string: string of b64 code
     """
