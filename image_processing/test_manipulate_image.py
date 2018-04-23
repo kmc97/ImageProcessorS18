@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 
 
-from manipulate_image import check_b64, check_image_input, image_to_b64
+from manipulate_image import check_UUID_input, check_b64, check_image_input, image_to_b64
 
 
 def test_check_b64():
@@ -29,4 +29,18 @@ def test_check_image_input():
 
     with pytest.raises(ValueError):
         incorrect = check_image_input('.pdf')
+
+def test_check_UUID():
+    UUID = ['katie124', '0120120', 'dogsRcool']
+    for ID in UUID:
+        valid = check_UUID_input(ID)
+        assert(valid== True)    
+
+    with pytest.raises(ValueError):
+        invalid = check_UUID_input(12)
     
+    with pytest.raises(ValueError):
+        check_UUID_input('')
+    
+    with pytest.raises(ValueError):#     
+        check_UUID_input('_____Kathleen')

@@ -71,7 +71,7 @@ def check_image_input(export_type):
     :returns True: if pass test
     """
     
-    if(export_type.lower().endswith( '.jpg') or export_type.lower().endswith( '.png')or export_type.lower().endswith( '.tiff')):
+    if(export_type.lower().endswith('.jpg') or export_type.lower().endswith('.png')or export_type.lower().endswith('.tiff')):
         return True
     else:
         logging.info('incorrect export file extension')
