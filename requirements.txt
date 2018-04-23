@@ -9,3 +9,5 @@ pymodm
 gunicorn
 requests
 flask-cors
+jupyter
+jupyterlab
