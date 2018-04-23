@@ -37,4 +37,18 @@ def numpy_to_pic(np_array, filename):
     img.save(filename)
 
 def check_b64(b64):
-    base64.b64encode(base64.b64decode(b64)) == b64
+    try:
+        base64.b64encode(base64.b64decode(b64)) == b64
+    except:
+        raise TypeError("input is not base64")
+    
+def check_image_input(export_type):
+    if(export_type.lower().endswith( '.jpg') or export_type.lower().endswith( '.png')or export_type.lower().endswith( '.tiff')):
+        return True
+    else:
+        raise ValueError('File can only export as .jpg, .png, .tiff')
+        
+def image_to_b64(UUID, filename):
+    with open(filename, "rb") as image_file:
+        image_string = base64.b64encode(image_file.read())
+        return image_string

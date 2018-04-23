@@ -106,5 +106,5 @@ def process_time(t1):
     t2 = time_now()
     duration = t2-t1
    # dur = divmod(duration.days * 86400 + duration.seconds, 60)
-    logging.info('process completed in' + duration)
+  #  logging.info('process completed in' + duration)
     return duration
