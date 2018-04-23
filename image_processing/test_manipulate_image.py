@@ -28,6 +28,6 @@ def test_check_image_input():
         assert(valid == True)
 
     with pytest.raises(ValueError):
-	notso_valid_type = '.pdf'
+	notso_valid_type = ('.pdf')
         incorrect = check_image_input(notso_valid_type)
     
