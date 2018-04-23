@@ -66,7 +66,7 @@ def convert_gray(filename):
     """
     
     img = Image.open(filename).convert('L')
-    updated_ending = filename.replace(filename, "gray_" + filename)
+    updated_ending = filename.replace(filename,filename)
     img.save(updated_ending)
     gray_array = pic_to_numpy(updated_ending)
     return gray_array
@@ -92,6 +92,7 @@ def time_now():
     :return timestamp: current time stamp
     
     """
+    
     timestamp = datetime.datetime.now()
     return timestamp
 
@@ -101,8 +102,8 @@ def process_time(t1):
     
     :param t1: time start of image processing
     :return duration: total time spanned during image processing
-    
     """
+    
     t2 = time_now()
     duration = t2-t1
    # dur = divmod(duration.days * 86400 + duration.seconds, 60)
