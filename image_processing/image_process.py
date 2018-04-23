@@ -1,12 +1,11 @@
-from manipulate_image import pic_to_numpy, numpy_to_pic
-from scipy import ndimage
-#import matplotlib.pyplot as plt
 import numpy as np 
 from PIL import Image
-from skimage import img_as_uint, img_as_float, exposure, data
+from skimage import exposure
+from manipulate_image import pic_to_numpy
 import datetime
 import logging
 
+logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
 
 def contrast_stretching(pic_as_numpy):
     
@@ -55,6 +54,21 @@ def invert(pic_as_numpy):
     
     inverted = np.invert(pic_as_numpy)
     return inverted
+
+def log_compress(pic_as_numpy):
+    
+    """ function log compresses numpy array (or at least i think this is what log compression is)
+    
+    :param pic_as_numpy: image numpy array
+    :return log_compressed: compressed numpy array
+    
+    """
+    
+    shape_matrix = pic_as_numpy.shape
+    one_matrix = np.ones(shape_matrix)
+    log_matrix = np.log(one_matrix+pic_as_numpy)
+    log_compressed = log_matrix/np.max(log_matrix)
+    return log_compressed
 
 def convert_gray(filename):
         
@@ -106,6 +120,6 @@ def process_time(t1):
     
     t2 = time_now()
     duration = t2-t1
-    dur = divmod(duration.days * 86400 + duration.seconds, 60)
-  #  logging.info('process completed in' + duration)
-    return dur
+    dur = (duration.days,duration.seconds, duration.microseconds)
+    seconds = dur[2]*0.000001
+    return seconds

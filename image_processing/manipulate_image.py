@@ -4,6 +4,8 @@ from scipy import misc
 from PIL import Image
 import logging
 
+logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
+
 def image_to_b64(filename):
     """ Function transforms image to b64
    
@@ -57,7 +59,9 @@ def check_b64(b64):
         else:
             pass
     except:
+        logging.info('not recieving base64 input')
         raise TypeError("input is not base64")
+        
           
 def check_image_input(export_type):
     """ Function checks if file type is .jpg, .png or .tiff
@@ -66,8 +70,28 @@ def check_image_input(export_type):
     :raises ValueError: if file extension is not .jpg, .png or .tiff
     :returns True: if pass test
     """
+    
     if(export_type.lower().endswith( '.jpg') or export_type.lower().endswith( '.png')or export_type.lower().endswith( '.tiff')):
         return True
     else:
+        logging.info('incorrect export file extension')
         raise ValueError('File can only export as .jpg, .png, .tiff')
-        
+
+def check_UUID_input(UUID):
+    """ Function checks to make sure UUID is a string
+   
+    :param UUID: user inputted unique identifier of the picture
+    :raises ValueError: if UUID is not a string
+    :returns True: if pass test
+    """
+    
+    if (isinstance(UUID, basestring)):
+        if UUID.isalnum():
+            return True
+        else:
+            logging.info('UUID has weird characters in it')
+            raise ValueError('UUID needs to be alphaNumeric')
+    else:
+        logging.info('UUID is not a string')
+        raise ValueError("UUID should be input as a string")
+    

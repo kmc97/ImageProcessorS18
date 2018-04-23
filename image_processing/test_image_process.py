@@ -3,7 +3,8 @@ import numpy as np
 import time
 
 from image_process import pic_metrics, process_time, time_now
-from manipulate_image import pic_to_numpy
+from manipulate_image import pic_to_numpy, image_to_b64
+#from back_end import process_contrast_stretch
 
 def test_pic_metrics():
     #with test photo and known pix, size, max/min, avg
@@ -18,8 +19,15 @@ def test_pic_metrics():
 def test_process_time():
     # makes sure to take difference of the times
     t1 = time_now()
-    time.sleep(1)
     duration = process_time(t1)
-    assert(len(duration) == 2)
-    assert(duration[1] > 0)
+    assert(duration > 0)
 
+# wont work because of matplot lib in Histogram.py
+#def test_output_exists():
+ #   UUID = ('test')
+  #  b64 = image_to_b64('go_bobcats.jpg')
+  #  export_file_type = ('.jpg')
+  #  results = process_contrast_stretch(UUID, b64, export_file_type)
+  #  assert (results[0] == UUID)
+  #  assert (isinstance(results[2], int)== True)
+    
