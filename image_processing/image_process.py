@@ -1,6 +1,6 @@
 from manipulate_image import pic_to_numpy, numpy_to_pic
 from scipy import ndimage
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np 
 from PIL import Image
 from skimage import img_as_uint, img_as_float, exposure, data
@@ -106,6 +106,6 @@ def process_time(t1):
     
     t2 = time_now()
     duration = t2-t1
-   # dur = divmod(duration.days * 86400 + duration.seconds, 60)
+    dur = divmod(duration.days * 86400 + duration.seconds, 60)
   #  logging.info('process completed in' + duration)
-    return duration
+    return dur

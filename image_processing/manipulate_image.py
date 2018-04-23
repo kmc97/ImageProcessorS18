@@ -52,13 +52,13 @@ def check_b64(b64):
     :raises ValueError: if input is empty
     """
     try:
-        base64.b64encode(base64.b64decode(b64)) == b64
+        if (base64.b64encode(base64.b64decode(b64)) == b64):
+            return True
+        else:
+            pass
     except:
         raise TypeError("input is not base64")
-    if b64 is None:
-        raise ValueError("picture not converted correctly")
-        logging.warning("b64 string has nothing in it") 
-        
+          
 def check_image_input(export_type):
     """ Function checks if file type is .jpg, .png or .tiff
    
