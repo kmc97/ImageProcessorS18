@@ -85,7 +85,7 @@ def check_UUID_input(UUID):
     :returns True: if pass test
     """
     
-    if (isinstance(UUID, basestring)):
+    if (isinstance(UUID, str)):
         if UUID.isalnum():
             return True
         else:
