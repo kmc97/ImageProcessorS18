@@ -25,12 +25,16 @@ const MenuProps = {
 };
 
 export default class Methods extends React.Component {
-  state = {
-    name: [],
-  };
+  constructor() {
+    super();
+    this.state = {
+      "methods":[]
+    };
+  }
 
   handleChange = event => {
-    this.setState({ name: event.target.value });
+    this.setState({ methods: event.target.value });
+    console.log("methods state changed")
   };
 
   render () {
@@ -46,7 +50,7 @@ export default class Methods extends React.Component {
             </InputLabel>
           <Select
             multiple
-            value={this.state.name}
+            value={this.state.methods}
             onChange={this.handleChange}
             input={<Input id="select-multiple-checkbox" />}
             MenuProps={MenuProps}
@@ -54,7 +58,7 @@ export default class Methods extends React.Component {
           >
             {names.map(name => (
               <MenuItem key={name} value={name}> 
-                <Checkbox checked={this.state.name.indexOf(name) > -1} />
+                <Checkbox checked={this.state.methods.indexOf(name) > -1} />
                 <ListItemText primary={name} />
               </MenuItem>
             ))}

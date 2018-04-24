@@ -1,21 +1,11 @@
 import React from 'react';
-import MenuItem from 'material-ui/Menu/MenuItem';
 import TextField from 'material-ui/TextField';
-
-var  styles = {
-  "textField": {
-    "marginLeft": "100px",
-    "marginRight":"30px",
-    "marginTop":"50px",
-    "width": "200",
-  },
-};
 
 export default class Identifier  extends React.Component {
   constructor() {
     super();
    this.state = {
-        "Identifier": ''
+        "Identifier": ""
     };
   }
 
@@ -23,6 +13,7 @@ export default class Identifier  extends React.Component {
     this.setState({
       "Identifier": event.target.value,
     });
+    console.log("identifier updated")
   };
 
   render() {

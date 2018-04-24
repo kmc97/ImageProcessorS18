@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import DropzoneComponent from 'react-dropzone-component';
 import { UploadField } from '@navjobs/upload';
-import Image from 'react-image-resizer';
 
 class Upload extends Component {
 	constructor() {
