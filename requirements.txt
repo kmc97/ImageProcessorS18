@@ -1,0 +1,13 @@
+scikit-image
+numpy
+ipython
+pytest
+pytest-cov
+pytest-pep8
+flask
+pymodm
+gunicorn
+requests
+flask-cors
+jupyter
+jupyterlab
