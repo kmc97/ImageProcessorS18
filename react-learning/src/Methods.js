@@ -33,15 +33,16 @@ export default class Methods extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ methods: event.target.value });
+    this.setState({methods: event.target.value });
+    this.props.onMethodsChange(event);
     console.log("methods state changed")
   };
 
   render () {
     return (
       <div style ={{
+        textAlign: "center",
         marginLeft: "100px",
-        marginTop: "50px",
         marginBottom: "10px",
       }}>
         <FormControl>

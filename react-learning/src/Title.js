@@ -7,6 +7,7 @@ var styles = {
   "appBarStyle": {
     "marginBottom": "50px",
     "marginLeft":"10px",
+    "textAlign":"center",
     "backgroundColor": "green",
   }
 }
