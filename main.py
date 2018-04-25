@@ -15,8 +15,9 @@ def original_image():
     r = request.get_json()
     name = r["file_name"]
     base64_image = r["base_64"]
+    image_proc_type = r["image_proc_type"]
 
-    x = jsonify({'file_name': name, 'base_64': base64_image})
+    x = jsonify({'file_name': name, 'base_64': base64_image, 'image_proc_type': image_proc_type})
 
     return x
 
@@ -25,20 +26,25 @@ def original_image():
 def processed_image():
     r = request.get_json()
     name_p = r["file_name_p"]
+    timestamp = r["timestamp"]
+    image_p_type = r["image_p_type"]
+    duration = r["duration"]
+    metrics = r["metrics"]
     base64_image_p = r["base_64_p"]
 
-    y = jsonify({'file_name_p': name_p, 'base_64_p': base64_image_p})
+    y = jsonify({'file_name_p': name_p, 'timestamp': timestamp, 'image_p_type': image_p_type, 'duration': duration,
+                 'metrics': metrics, 'base_64_p': base64_image_p})
 
     return y
 
 
-def add_original_image(name, base64_image):
-    u = models.User(name, base64_image)
+def add_original_image(name, base64_image, image_proc_type):
+    u = models.User(name, base64_image, image_proc_type)
     u.save()
 
 
-def add_processed_image(name_p, base64_image_p):
-    z = models.User(name_p, base64_image_p)
+def add_processed_image(name_p, timestamp, image_p_type, base64_image_p):
+    z = models.User(name_p, timestamp, image_p_type, base64_image_p)
     z.save()
 
 
