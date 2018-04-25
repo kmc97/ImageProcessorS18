@@ -1,8 +1,17 @@
-language: python
-python:
-      - "3.6"
-
-install:
-      - pip install -r requirements.txt
-script:
-      - pytest -v
+matrix:
+    include:
+      - language: python
+        python:
+          -"3.6"
+        install:
+          - pip install -r requirements.txt
+        script:
+         - pytest -v
+       
+     - language: node_js
+       node_js: "8"
+       script:
+         - npm test
+         - npm run build
+         
+       
