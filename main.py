@@ -21,14 +21,6 @@ def original_image():
     return x
 
 
-#@app.route('/imageprocessor/original_image/<file_name>', methods=['GET'])
-#def get_data(file_name):
-
-    #user = models.User.objects.raw({'_id': file_name}).first()
-    #image = user.base_64
-    #print(image)
-
-
 @app.route('/imageprocessor/processed_image', methods=['POST'])
 def processed_image():
     r = request.get_json()
@@ -41,10 +33,19 @@ def processed_image():
 
 
 def add_original_image(name, base64_image):
-
     u = models.User(name, base64_image)
     u.save()
 
+
+def add_processed_image(name_p, base64_image_p):
+    z = models.User(name_p, base64_image_p)
+    z.save()
+
+
+x = original_image()
+y = processed_image()
+x.add_original_image()
+y.add_processed_image()
 
 #def open_image(image_filename):
     #try:
