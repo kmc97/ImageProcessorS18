@@ -5,20 +5,21 @@ export default class Identifier  extends React.Component {
   constructor() {
     super();
    this.state = {
-        "Identifier": ""
+        "Identifier": "",
+        "errorIdentifier":""
     };
   }
 
-  handleChange = identifier => event => {
-    this.setState({
-      "Identifier": event.target.value,
-    });
+  onHandleChange = (event) => {
+    console.log("I am here")
+    this.setState({"Identifier": event.target.value});
+    console.log("state of identifier changed in identifier.js")
     this.props.onIdentifierChange(event);
     var letterNumber = "[0-9a-zA-Z]+$";
-    if (this.state.Identifier.match(letterNumber) & this.state.Identifier.length() > 0) {
-        console.log("identifier entered")
-    }
-    else { alert("Please enter another identifier only including alphanumeric characters")
+    if (this.state.Identifier.match(letterNumber)) {
+        console.log("identifier verified")
+    } else { this.setState({"errorIdentifier":"Invalid entry, only letters and numbers are allowed"})
+    console.log("invalid identifier")
     }
   };
 
@@ -37,9 +38,11 @@ export default class Identifier  extends React.Component {
             id="required"
             label="Required"
             value={this.state.identifier}
-            onChange={this.handleChange}
+            onChange={this.onHandleChange}
             margin="normal"
         </TextField>
+        <div> {this.state.errorIdentifier} </div>
+        {this.state.identifier}
       </div>
     )
   }
