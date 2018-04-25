@@ -21,12 +21,12 @@ def original_image():
     return x
 
 
-@app.route('/imageprocessor/original_image/<file_name>', methods=['GET'])
-def get_data(file_name):
+#@app.route('/imageprocessor/original_image/<file_name>', methods=['GET'])
+#def get_data(file_name):
 
-    user = models.User.objects.raw({'_id': file_name}).first()
-    image = user.base_64
-    print(image)
+    #user = models.User.objects.raw({'_id': file_name}).first()
+    #image = user.base_64
+    #print(image)
 
 
 @app.route('/imageprocessor/processed_image', methods=['POST'])
