@@ -6,6 +6,7 @@ class Upload extends Component {
 		super();		
 		this.state = {
 			currentImageString: '',
+      errorImage: '',
 		}
 	} 
 
@@ -19,7 +20,7 @@ class Upload extends Component {
     console.log(file_extension)
     if (file_extension === 'jpg' || file_extension === 'jpeg'
         ||file_extension === 'png' || file_extension === "tiff" 
-        || file_extension === "tif") {
+        || file_extension === "tif" || file_extension === "JPG") {
         reader.readAsDataURL(file);
 		    reader.onloadend = () => {
 			  console.log(reader.result);
@@ -27,6 +28,7 @@ class Upload extends Component {
         this.props.onUploadChange(reader.result);
             }
 	      } else {
+          this.setState({errorImage:"Wrong file type, please choose an image"})
           console.log("wrong file type")
         }
   }
@@ -47,6 +49,9 @@ class Upload extends Component {
                         height={'50%'}
                         width={'50%'}
       />
+        <h2 style ={{color: "red"}}> 
+            {this.state.errorImage} 
+        </h2>
 			</div>
 		)
 	}

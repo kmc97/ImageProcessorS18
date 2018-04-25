@@ -4,7 +4,6 @@ import Title from "./Title.js";
 import Upload from "./Upload.js";
 import Methods from "./Methods.js";
 import Identifier from "./Identifier.js";
-import Submit from "./Submit.js"
 import axios from 'axios';
 import Button from 'material-ui/Button';
 
