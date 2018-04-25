@@ -17,7 +17,9 @@ class Upload extends Component {
     console.log(file_name)
     const file_extension = file_name.split('.').pop();
     console.log(file_extension)
-    if (file_extension === 'jpg' || file_extension === 'png') {
+    if (file_extension === 'jpg' || file_extension === 'jpeg'
+        ||file_extension === 'png' || file_extension === "tiff" 
+        || file_extension === "tif") {
         reader.readAsDataURL(file);
 		    reader.onloadend = () => {
 			  console.log(reader.result);
