@@ -1,7 +1,8 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 
-export default class Identifier  extends React.Component {
+export default class Identifier extends React.Component {
   constructor() {
     super();
    this.state = {
@@ -11,10 +12,11 @@ export default class Identifier  extends React.Component {
   }
 
   onHandleChange = (event) => {
-    console.log("I am here")
     this.setState({"Identifier": event.target.value});
-    console.log("state of identifier changed in identifier.js")
+    console.log("state of identifier changed in identifier.js");
     this.props.onIdentifierChange(event);
+  }
+    /*
     var letterNumber = "[0-9a-zA-Z]+$";
     if (this.state.Identifier.match(letterNumber)) {
         console.log("identifier verified")
@@ -22,7 +24,12 @@ export default class Identifier  extends React.Component {
     console.log("invalid identifier")
     }
   };
-
+*/
+/*  onButtonClick = (event) => {
+    console.log(this.state.Identifier);
+    this.props.onIdentifierButtonClick(this.state.Identifier);
+  }
+*/
   render() {
 
     return (
@@ -35,14 +42,15 @@ export default class Identifier  extends React.Component {
             Please Enter a Unique Identifier 
         </div>
         <TextField>
-            id="required"
-            label="Required"
-            value={this.state.identifier}
+            value={this.state.Identifier}
             onChange={this.onHandleChange}
             margin="normal"
         </TextField>
+        <Button onClick={this.onButtonClick}>
+            Log Text Field Data
+        </Button>
         <div> {this.state.errorIdentifier} </div>
-        {this.state.identifier}
+        {this.state.Identifier}
       </div>
     )
   }
