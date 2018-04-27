@@ -1,0 +1,47 @@
+04/23/2018 &I:54:02 PM not recieving base64 input
+04/23/2018 &I:54:02 PM not recieving base64 input
+04/23/2018 &I:54:02 PM incorrect export file extension
+04/23/2018 &I:54:02 PM UUID is not a string
+04/23/2018 &I:54:02 PM UUID has weird characters in it
+04/23/2018 &I:55:20 PM not recieving base64 input
+04/23/2018 &I:55:20 PM not recieving base64 input
+04/23/2018 &I:55:20 PM incorrect export file extension
+04/23/2018 &I:55:20 PM UUID is not a string
+04/23/2018 &I:55:20 PM UUID has weird characters in it
+04/23/2018 &I:57:05 PM not recieving base64 input
+04/23/2018 &I:57:05 PM not recieving base64 input
+04/23/2018 &I:57:05 PM incorrect export file extension
+04/23/2018 &I:57:05 PM UUID is not a string
+04/23/2018 &I:57:05 PM UUID has weird characters in it
+04/25/2018 &I:08:28 PM not recieving base64 input
+04/25/2018 &I:08:28 PM not recieving base64 input
+04/25/2018 &I:08:28 PM incorrect export file extension
+04/25/2018 &I:08:28 PM UUID is not a string
+04/25/2018 &I:08:28 PM UUID has weird characters in it
+04/25/2018 &I:08:28 PM UUID has weird characters in it
+04/27/2018 &I:26:54 PM not recieving base64 input
+04/27/2018 &I:26:54 PM not recieving base64 input
+04/27/2018 &I:26:54 PM incorrect export file extension
+04/27/2018 &I:26:54 PM UUID is not a string
+04/27/2018 &I:26:54 PM UUID has weird characters in it
+04/27/2018 &I:26:54 PM UUID has weird characters in it
+04/27/2018 &I:29:02 PM user input is correct type and value
+04/27/2018 &I:29:02 PM findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=12.0 to DejaVu Sans (u'/home/kmc97/bme590hrm/env/local/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000
+04/27/2018 &I:29:02 PM findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans (u'/home/kmc97/bme590hrm/env/local/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000
+04/27/2018 &I:29:02 PM Image Successfully proccessed
+04/27/2018 &I:29:02 PM not recieving base64 input
+04/27/2018 &I:29:02 PM not recieving base64 input
+04/27/2018 &I:29:02 PM incorrect export file extension
+04/27/2018 &I:29:02 PM UUID is not a string
+04/27/2018 &I:29:02 PM UUID has weird characters in it
+04/27/2018 &I:29:02 PM UUID has weird characters in it
+04/27/2018 &I:29:19 PM user input is correct type and value
+04/27/2018 &I:29:20 PM findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=12.0 to DejaVu Sans (u'/home/kmc97/bme590hrm/env/local/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000
+04/27/2018 &I:29:20 PM findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans (u'/home/kmc97/bme590hrm/env/local/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000
+04/27/2018 &I:29:20 PM Image Successfully proccessed
+04/27/2018 &I:29:20 PM not recieving base64 input
+04/27/2018 &I:29:20 PM not recieving base64 input
+04/27/2018 &I:29:20 PM incorrect export file extension
+04/27/2018 &I:29:20 PM UUID is not a string
+04/27/2018 &I:29:20 PM UUID has weird characters in it
+04/27/2018 &I:29:20 PM UUID has weird characters in it
