@@ -1,4 +1,4 @@
-import pytest
+iimport pytest
 import numpy as np
 import time
 
@@ -38,7 +38,7 @@ def test_output_exists():
     assert (results[1].minute > 0)
     assert (results[2] == 'contrast stretching')
     assert (results[3] > 0)
-#    assert (results[4] != None)
+    assert (results[4] != None)
     assert(results[5] != b64)
  
     
