@@ -40,11 +40,11 @@ export default class App extends Component {
 
    
   PostData = () => {
-      var url = "http://0.0.0.0:5000/test"
+      var url = "http://0.0.0.0:5000/imageprocessor/original_image"
       var body = {
           "Methods": this.state.methods,
           "Identifier": this.state.Identifier,
-          "Picture": this.state.currentImageString
+          "OriginalImg": this.state.currentImageString
       }
      console.log(body)
       axios.post(url, body).then(function (response) {
