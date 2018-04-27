@@ -48,10 +48,10 @@ def add_processed_image(name_p, timestamp, image_p_type, base64_image_p):
     z.save()
 
 
-x = original_image()
-y = processed_image()
-x.add_original_image()
-y.add_processed_image()
+#x = original_image()
+#y = processed_image()
+#x.add_original_image()
+#y.add_processed_image()
 
 #def open_image(image_filename):
     #try:
