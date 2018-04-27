@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
-import { UploadField } from '@navjobs/upload';
+//import { UploadField } from '@navjobs/upload';
 import Dropzone from 'react-dropzone';
 
 class Upload extends Component {
   constructor() {
 		super();		
 		this.state = {
-      currentImageString: '',
+      currentImageString: [],
       errorImage: '',
 		}
 	} 
 
 	onUpload = (files) => {
+   const uploaders = files.map(file => {
+    for (var i=0; i<files.length; i++) {   
         const reader = new FileReader()
-		    const file = files[0]
+		    const file = files[i]
         console.log(file)
         const file_name = file["name"]
         console.log(file_name)
@@ -24,15 +26,16 @@ class Upload extends Component {
             || file_extension === "tif" || file_extension === "JPG") {
                 reader.readAsDataURL(file);
 		            reader.onloadend = () => {
-			              console.log(reader.result);
-			              this.setState({currentImageString: reader.result});
-                    this.props.onUploadChange(reader.result);
+			              this.setState({currentImageString:[{"name":file_name},{"bs64":reader.result}]});
+                  console.log(this.state.currentImageString)  
+                  this.props.onUploadChange(reader.result);
             }
 	      } else {
           this.setState({errorImage:"Wrong file type, please choose an image"})
           console.log("wrong file type")
         }
-  
+    }
+  })
   }
 
   render() {
@@ -44,24 +47,23 @@ class Upload extends Component {
                 marginTop: "10px",
         }}> 
 				<h2>Upload your image</h2>	
-				<Dropzone
-            mutliple={true}
-            accept="image/*"
-            onDrop={this.onImageDrop.bind(this)}
-            >
-            <div> Drop an image or click to select a file to upload</div>
+        <Dropzone
+              onDrop={this.onUpload}
+              multiple
+              accept="image/*"
+              >
+              <div> Drop your files or click to upload </div>
         </Dropzone>
-
-        <UploadField onFiles={this.onUpload}>
-						Choose File
-				</UploadField>
-        <img src={this.state.currentImageString} 
-                        height={'50%'}
-                        width={'50%'}
-      />
+        
+        <img value={this.state.currentImageString} 
+                          height={'50%'}
+                          width={'50%'}
+            renderValue={selected => selected.join(',')}
+        />
         <h2 style ={{color: "red"}}> 
             {this.state.errorImage} 
         </h2>
+        
 			</div>
 		)
 	}

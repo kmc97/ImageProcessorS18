@@ -24,7 +24,7 @@ export default class App extends Component {
 
   onUploadChange = (event) => {
     this.setState({"currentImageString":event});
-    console.log(this.state.currentImageString)
+//    console.log(this.state.currentImageString)
   }
 
   onMethodsChange = (event) => {
@@ -34,7 +34,9 @@ export default class App extends Component {
 
   onIdentifierChange = (event) => {
     this.setState({"Identifier":event.target.value});
+    console.log(this.state.Identifier)
   }
+
 
    
   PostData = () => {
@@ -65,7 +67,6 @@ export default class App extends Component {
       <div>
         <Title />
         <Upload onUploadChange={this.onUploadChange}/>
-        <img src={this.state.currentImageString}/>
         <div style={{
             textAlign:"center",
             marginLeft:"100px",
