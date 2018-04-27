@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import { UploadField } from '@navjobs/upload';
 import Dropzone from 'react-dropzone';
 
 class Upload extends Component {
@@ -12,7 +11,6 @@ class Upload extends Component {
 	} 
 
 	onUpload = (files) => {
-   const uploaders = files.map(file => {
     for (var i=0; i<files.length; i++) {   
         const reader = new FileReader()
 		    const file = files[i]
@@ -21,21 +19,15 @@ class Upload extends Component {
         console.log(file_name)
         const file_extension = file_name.split('.').pop();
         console.log(file_extension)
-        if (file_extension === 'jpg' || file_extension === 'jpeg'
-            ||file_extension === 'png' || file_extension === "tiff" 
-            || file_extension === "tif" || file_extension === "JPG") {
-                reader.readAsDataURL(file);
-		            reader.onloadend = () => {
-			              this.setState({currentImageString:[{"name":file_name},{"bs64":reader.result}]});
-                  console.log(this.state.currentImageString)  
-                  this.props.onUploadChange(reader.result);
+        reader.readAsDataURL(file);
+		    reader.onloadend = () => {
+            var newImage = this.state.currentImageString.slice();
+            newImage.push([{"name":file_name}, {"bs64":reader.result}])
+			      this.setState({currentImageString:newImage});
+            console.log(this.state.currentImageString)  
+            this.props.onUploadChange(reader.result);
             }
-	      } else {
-          this.setState({errorImage:"Wrong file type, please choose an image"})
-          console.log("wrong file type")
-        }
     }
-  })
   }
 
   render() {
@@ -58,7 +50,6 @@ class Upload extends Component {
         <img value={this.state.currentImageString} 
                           height={'50%'}
                           width={'50%'}
-            renderValue={selected => selected.join(',')}
         />
         <h2 style ={{color: "red"}}> 
             {this.state.errorImage} 
