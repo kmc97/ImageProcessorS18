@@ -34,7 +34,6 @@ export default class App extends Component {
 
   onIdentifierChange = (event) => {
     this.setState({"Identifier":event.target.value});
-    console.log(this.state.Identifier)
   }
 
    
@@ -47,7 +46,6 @@ export default class App extends Component {
       }
      console.log(body)
       axios.post(url, body).then(function (response) {
-            console.log(response);
         this.setState({"Identifier":response.data.Identifier})
         this.setState({"Methods": response.data.Method})
         this.setState({"OriginalImg": response.data.OriginalImg})
@@ -67,7 +65,7 @@ export default class App extends Component {
       <div>
         <Title />
         <Upload onUploadChange={this.onUploadChange}/>
-        
+        <img src={this.state.currentImageString}/>
         <div style={{
             textAlign:"center",
             marginLeft:"100px",
