@@ -6,6 +6,7 @@ import logging
 
 logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
 
+
 def image_to_b64(filename):
     """ Function transforms image to b64
    
@@ -15,7 +16,8 @@ def image_to_b64(filename):
     with open(filename, "rb") as image_file:
         image_string = base64.b64encode(image_file.read())
         return image_string
-    
+
+
 def string_to_image(base64string, new_file_name):
     """ Function transforms b64string to b64 to new file
    
@@ -27,6 +29,7 @@ def string_to_image(base64string, new_file_name):
     with open(new_file_name, "wb") as image_out:
         image_out.write(base64.b64decode(base64string))
 
+
 def pic_to_numpy(temp_file):
     """ Function transforms image to numpy array
    
@@ -35,6 +38,7 @@ def pic_to_numpy(temp_file):
     """
     np_array = misc.imread(temp_file)
     return np_array
+
 
 def numpy_to_pic(np_array, filename):
     """ Function transforms numpy array to image
@@ -45,6 +49,7 @@ def numpy_to_pic(np_array, filename):
     """
     img = Image.fromarray(np_array)
     img.save(filename)
+
 
 def check_b64(b64):
     """ Function checks if string is base64 and not empty
@@ -76,6 +81,7 @@ def check_image_input(export_type):
     else:
         logging.info('incorrect export file extension')
         raise ValueError('File can only export as .jpg, .png, .tiff')
+
 
 def check_UUID_input(UUID):
     """ Function checks to make sure UUID is a string
