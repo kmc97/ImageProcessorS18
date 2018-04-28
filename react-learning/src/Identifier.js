@@ -10,12 +10,13 @@ export default class Identifier extends React.Component {
         "errorIdentifier":""
     };
   }
-
-  onHandleChange = (event) => {
-    this.setState({"Identifier": event.target.value});
-    console.log("state of identifier changed in identifier.js");
-    this.props.onIdentifierChange(event);
+  
+  onIdentifierChange = (event) => {
+        this.setState({"Identifier":event.target.value}, () => {
+            console.log(this.state.Identifier)});
+        this.props.onIdentifierChange(event);
   }
+
     /*
     var letterNumber = "[0-9a-zA-Z]+$";
     if (this.state.Identifier.match(letterNumber)) {
@@ -24,11 +25,6 @@ export default class Identifier extends React.Component {
     console.log("invalid identifier")
     }
   };
-*/
-/*  onButtonClick = (event) => {
-    console.log(this.state.Identifier);
-    this.props.onIdentifierButtonClick(this.state.Identifier);
-  }
 */
   render() {
 
@@ -41,16 +37,14 @@ export default class Identifier extends React.Component {
         <div> 
             Please Enter a Unique Identifier 
         </div>
-        <TextField>
+        <TextField
             value={this.state.Identifier}
-            onChange={this.onHandleChange}
-            margin="normal"
+            onChange={this.onIdentifierChange}>
         </TextField>
         <Button onClick={this.onButtonClick}>
             Log Text Field Data
         </Button>
         <div> {this.state.errorIdentifier} </div>
-        {this.state.Identifier}
       </div>
     )
   }
