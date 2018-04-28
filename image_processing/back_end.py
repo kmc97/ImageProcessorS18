@@ -1,17 +1,19 @@
 import logging
 
+from image_processing.manipulate_image import string_to_image, pic_to_numpy, numpy_to_pic, check_b64, image_to_b64, check_image_input, check_UUID_input
+from image_processing.image_process import convert_gray, contrast_stretching, pic_metrics, time_now, process_time, adaptive_equalization, histogram_equalization, invert, time_now, log_compress
+from image_processing.Histogram import pic_histo, display_histogram
+
+
 logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
 
-from manipulate_image import string_to_image, pic_to_numpy, numpy_to_pic, check_b64, image_to_b64, check_image_input, check_UUID_input
-from image_process import convert_gray, contrast_stretching, pic_metrics, time_now, process_time, adaptive_equalization, histogram_equalization, invert, time_now, log_compress
-from Histogram import pic_histo, display_histogram
 
 def process_contrast_stretch(UUID, b64_string, export_file_type):
     
     """ CONTRAST STRETCHING Function takes in Unique ID and b64 image string, contrast stretches the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image
 
     :param UUID: Alphanumeric User input, unique identifier where file will be pulled
-    :param b64_string:  Recieved from front-end, contains b64 of desired image
+    :param b64_string:  Received from front-end, contains b64 of desired image
     :param export_file_type: User input of desired file type
     :raises TypeError:  From check_b64,if input data is not base64
     :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the processed image with the histogram
@@ -34,6 +36,7 @@ def process_contrast_stretch(UUID, b64_string, export_file_type):
     logging.info('Image Successfully proccessed')
     
     return b64_processed
+
 
 def process_adapt_equalization(UUID, b64_string, export_file_type):
     
@@ -63,6 +66,7 @@ def process_adapt_equalization(UUID, b64_string, export_file_type):
     logging.info('Image Successfully proccessed')
         
     return b64_processed
+
 
 def process_histogram_equalization(UUID, t1, b64_string, export_file_type):
 
@@ -94,7 +98,6 @@ def process_histogram_equalization(UUID, t1, b64_string, export_file_type):
     return b64_processed
 
 
-
 def process_reverse_image(UUID, b64_string, export_file_type):
     
     """ REVERSE VIDEO function takes in Unique ID and b64 image string, and inverts the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image with the histogram
@@ -121,10 +124,11 @@ def process_reverse_image(UUID, b64_string, export_file_type):
     logging.info('Image Successfully proccessed')
     b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
-    b64_processed =  [UUID, t1, 'reverse video', dur_process, metrics, b64_p]
+    b64_processed = [UUID, t1, 'reverse video', dur_process, metrics, b64_p]
     logging.info('Image Successfully proccessed')
     
     return b64_processed
+
 
 def process_log_compression(UUID, b64_string, export_file_type):
     

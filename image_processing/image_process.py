@@ -1,7 +1,7 @@
 import numpy as np 
 from PIL import Image
 from skimage import exposure
-from manipulate_image import pic_to_numpy
+from image_processing.manipulate_image import pic_to_numpy
 import datetime
 import logging
 
@@ -17,7 +17,7 @@ def contrast_stretching(pic_as_numpy):
     """
     
     p2, p98 = np.percentile(pic_as_numpy, (2,98))
-    img_rescale =exposure.rescale_intensity(pic_as_numpy, in_range = (p2,p98))
+    img_rescale = exposure.rescale_intensity(pic_as_numpy, in_range = (p2,p98))
     img_rescale = exposure.rescale_intensity(img_rescale,out_range =(0,255))
     return img_rescale
 

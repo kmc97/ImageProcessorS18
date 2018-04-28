@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymodm import MongoModel, fields, connect
 import models
+
+from image_processing.back_end import process_contrast_stretch, process_adapt_equalization,\
+    process_histogram_equalization, process_reverse_image, process_log_compression
+
 import numpy as np
 import base64
 
@@ -16,8 +20,9 @@ def original_image():
     name = r["file_name"]
     base64_image = r["base_64"]
     image_proc_type = r["image_proc_type"]
+    export_file_type = r["export_file_type"]
 
-    x = jsonify({'file_name': name, 'base_64': base64_image, 'image_proc_type': image_proc_type})
+    x = jsonify({'file_name': name, 'base_64': base64_image, 'image_proc_type': image_proc_type, 'export_file_type': export_file_type})
 
     return x
 
@@ -38,8 +43,8 @@ def processed_image():
     return y
 
 
-def add_original_image(name, base64_image, image_proc_type):
-    u = models.User(name, base64_image, image_proc_type)
+def add_original_image(name, base64_image, image_proc_type, export_file_type):
+    u = models.User(name, base64_image, image_proc_type, export_file_type)
     u.save()
 
 
@@ -48,10 +53,22 @@ def add_processed_image(name_p, timestamp, image_p_type, base64_image_p):
     z.save()
 
 
-#x = original_image()
-#y = processed_image()
-#x.add_original_image()
-#y.add_processed_image()
+def image_type(image_proc_type):
+
+    a = original_image()
+    if image_proc_type == "contrast stretching":
+        process_contrast_stretch(a[0], a[1], a[3])
+    if image_proc_type == "adaptive equalization":
+        process_adapt_equalization(a[0], a[1], a[4])
+    if image_proc_type == "histogram equalization":
+        process_histogram_equalization(a[0], a[1], a[4])
+    if image_proc_type == "reverse video":
+        process_reverse_image(a[0], a[1], a[4])
+    if image_proc_type == "log compression":
+        process_log_compression(a[0], a[1], a[4])
+
+
+
 
 #def open_image(image_filename):
     #try:
