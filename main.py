@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response, jsonify
 from flask_cors import CORS
 from pymodm import MongoModel, fields, connect
 import models
+from models import return_entry, add_file
 
 from image_processing.back_end import process_contrast_stretch, process_adapt_equalization,\
     process_histogram_equalization, process_reverse_image, process_log_compression
@@ -16,18 +17,51 @@ connect("mongodb://localhost:27017/imageprocessor")
 
 @app.route('/imageprocessor/original_image', methods=['POST'])
 def original_image():
+    info = []
+    num_pixels = []
+    pic_size = []
+    avg_value = []
+
     r = request.get_json()
     name = r["file_name"]
-    base64_image = r["base_64"]
+    b64_string = r["base_64"]
     image_proc_type = r["image_proc_type"]
     export_file_type = r["export_file_type"]
-
-    x = jsonify({'file_name': name, 'base_64': base64_image, 'image_proc_type': image_proc_type, 'export_file_type': export_file_type})
-
-    return x
+    b64_string = b64_string.encode("utf-8")
 
 
-@app.route('/imageprocessor/processed_image', methods=['POST'])
+    if image_proc_type == "contrast stretching":
+        info = process_contrast_stretch(name, b64_string, export_file_type)
+        metrics_list = list(info[4])
+        num_pixels = metrics_list[0]
+        pic_size = metrics_list[1]
+        avg_value = metrics_list[3]
+        info[5] = info[5].decode("utf-8")
+
+        add_file(info[0], info[1], info[2], info[3], info[4], info[5])
+
+    print_this = {"filename": info[5]}
+    return jsonify(print_this)
+
+
+
+
+@app.route('/imageprocessor/original_image/getthedata/<filename>', methods=['GET'])
+def get_data(filename):
+    data = return_entry(filename)
+    output = {
+        "filename": data[0],
+        "timestamp": data[1],
+        "processing_type": data[2],
+        "processing_duration": data[3],
+        "metrics": data[4],
+        "base_64_processed": data[5]
+        #"output": return_entry('testing')
+    }
+    return jsonify(output)
+
+
+"""@app.route('/imageprocessor/processed_image', methods=['POST'])
 def processed_image():
     r = request.get_json()
     name_p = r["file_name_p"]
@@ -40,52 +74,33 @@ def processed_image():
     y = jsonify({'file_name_p': name_p, 'timestamp': timestamp, 'image_p_type': image_p_type, 'duration': duration,
                  'metrics': metrics, 'base_64_p': base64_image_p})
 
-    return y
+    return y"""
 
 
-def add_original_image(name, base64_image, image_proc_type, export_file_type):
-    u = models.User(name, base64_image, image_proc_type, export_file_type)
-    u.save()
 
 
-def add_processed_image(name_p, timestamp, image_p_type, base64_image_p):
-    z = models.User(name_p, timestamp, image_p_type, base64_image_p)
-    z.save()
 
-
-def image_type(image_proc_type):
+"""def image_type(image_proc_type):
 
     a = original_image()
     if image_proc_type == "contrast stretching":
-        process_contrast_stretch(a[0], a[1], a[3])
-    if image_proc_type == "adaptive equalization":
-        process_adapt_equalization(a[0], a[1], a[4])
-    if image_proc_type == "histogram equalization":
-        process_histogram_equalization(a[0], a[1], a[4])
-    if image_proc_type == "reverse video":
-        process_reverse_image(a[0], a[1], a[4])
-    if image_proc_type == "log compression":
-        process_log_compression(a[0], a[1], a[4])
+        info = process_contrast_stretch(a[0], a[1], a[3])
+    # if image_proc_type == "adaptive equalization":
+    #    info = process_adapt_equalization(a[0], a[1], a[4])
+    # if image_proc_type == "histogram equalization":
+     #   info = process_histogram_equalization(a[0], a[1], a[4])
+    # if image_proc_type == "reverse video":
+      #  info = process_reverse_image(a[0], a[1], a[4])
+    # if image_proc_type == "log compression":
+      #  info = process_log_compression(a[0], a[1], a[4])
+    # else:
+      #  print("invalid input")
+        return info
 
 
+a = original_image()
 
-
-#def open_image(image_filename):
-    #try:
-        #img = Image.open(image_filename)
-
-        #with open(request.GET[image_filename], "rb") as image_file:
-        #    encoded_string = base64.b64encode(image_file.read())
-        #print(encoded_string)
-        #abc = db.database_name.insert({"image": encoded_string})
-        #return HttpResponse("inserted")
-
-
-    #except IOError:
-     #   pass
-
-#@app.route('/imageprocessor/<image_filename>', methods=['GET'])
-#def disp_image(image_filename):
+image_type(a[2])"""
 
 
 if __name__ == "__main__":

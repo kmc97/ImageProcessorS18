@@ -7,6 +7,7 @@ import logging
 
 logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
 
+
 def contrast_stretching(pic_as_numpy):
     
     """ function contrast stretches numpy array and outputs processed numpy array

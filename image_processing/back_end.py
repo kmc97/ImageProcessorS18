@@ -68,7 +68,7 @@ def process_adapt_equalization(UUID, b64_string, export_file_type):
     return b64_processed
 
 
-def process_histogram_equalization(UUID, t1, b64_string, export_file_type):
+def process_histogram_equalization(UUID, b64_string, export_file_type):
 
     """ HISTOGRAM EQUALIZATION Function takes in Unique ID and b64 image string, histogram equalizes the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image
 
