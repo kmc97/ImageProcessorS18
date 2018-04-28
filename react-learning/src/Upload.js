@@ -5,27 +5,28 @@ class Upload extends Component {
   constructor() {
 		super();		
 		this.state = {
-      currentImageString: ["name": "", "bs64":""],
-      errorImage: '',
+      "currentImageString": [],
+     "errorImage": '',
 		}
 	} 
 
 	onUpload = (files) => {
     for (var i=0; i<files.length; i++) {   
         const reader = new FileReader()
-		    const file = files[i]
-        console.log(file)
-        const file_name = file["name"]
-        console.log(file_name)
+		    const file = files[i];
+        console.log(file);
+        const file_name = file["name"];
+        console.log(file_name);
         const file_extension = file_name.split('.').pop();
-        console.log(file_extension)
+        console.log(file_extension);
         reader.readAsDataURL(file);
 		    reader.onloadend = () => {
-            var newImage = this.state.currentImageString.slice();
-            newImage.push({"name":file_name, "bs64":reader.result})
-			      this.setState({currentImageString:newImage});
-            console.log(this.state.currentImageString)  
-            this.props.onUploadChange(reader.result);
+            var newImage = this.state.currentImageString;
+            newImage.push({"name":file_name, "bs64":reader.result});
+            console.log(newImage);
+			      this.setState({"currentImageString": newImage});
+            console.log(this.state.currentImageString);  
+            this.props.onUploadChange(newImage);
             }
     }
   }
