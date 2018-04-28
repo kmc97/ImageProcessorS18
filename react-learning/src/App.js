@@ -6,25 +6,22 @@ import Methods from "./Methods.js";
 import Identifier from "./Identifier.js";
 import axios from 'axios';
 import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
-import Table, { TableCell, TableHead, TableRow} from 'material-ui/Table';
-
+import Table, { TableCell, TableRow} from 'material-ui/Table';
 
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      "Identifier_back":"",
-      "OriginalImg": "",
-      "Methods":"",
       "metrics":"",
-      "processedImg":""
+      "processedImg":"",
+      "originalImg":"",
+      "duration":"",
+      "timestamp":""
     }
   }
 
   onUploadChange = (event) => {
-    this.setState({"currentImageString":event});
-//    console.log(this.state.currentImageString)
+    this.setState({"currentImageString":event})
   }
 
   onMethodsChange = (event) => {
@@ -38,32 +35,26 @@ export default class App extends Component {
 
   PostData = () => {
       var url = "http://0.0.0.0:5000/imageprocessor/processed_image"
-      var body = {
-        "image_proc_type": this.state.methods,
-        "file_name": this.state.Identifier,
-        "base64_image": this.state.currentImageString
-      }
-     console.log(body)
-      console.log(this.state.Identifier);
-      axios.post(url, body).then( (response) => {
-        console.log(response)
-        console.log(response.data)
-        console.log(response.data.file_name)
-        this.setState({Identifier_back: response.data.file_name})
-        /*
-        this.setState({Methods: response.data.image_proc_type[1]})
-        this.setState({OriginalImg: response.data.base64_image})
-        */
-        this.setState({metrics: response.data.metrics})
-        this.setState({timestamp: response.data.timestamp})
-        this.setState({duration: response.data.duration})
-        this.setState({processedImg: response.data.base64_proc})
+        var body = {
+            "image_proc_type": this.state.methods,
+            "file_name": this.state.Identifier,
+            "base64_image": this.state.currentImageString
+        }
+        console.log(body)
+        console.log(this.state.Identifier);
+        axios.post(url, body).then( (response) => {
+            this.setState({Identifier_back: response.data.file_name})
+            this.setState({metrics: response.data.metrics})
+            this.setState({timestamp: response.data.timestamp})
+            this.setState({duration: response.data.duration})
+            this.setState({processedImg: response.data.base64_proc})
       
-      })
+        })
           .catch(function (error) {
             console.log(error);
           });
       }
+      
   
   createTable = () => {
     var tabledata = [];
@@ -99,43 +90,69 @@ export default class App extends Component {
     return tabledata;
   };
 
-
+  DisplayImages = () => {
+    if (this.state.currentImageString === 0) {
+      return [];
+    }
+/*
+    var name, count = 0;
+    for (name in this.state.currentImageString) {
+      if(this.state.currentImageString.hasOwnProperty(name)) {
+        count++;
+      }
+      console.log(count)
+    }
+*/
+    var Images = [];
+    for (var i =0; i<5; i++) {
+      console.log(this.state.currentImageString)
+      Images.push(this.state.currentImageString)
+      console.log(Images)
+    return Images
+  }
+  }
+  
   render() {
     var tabledata = this.createTable();
-
+    var Images = this.DisplayImages();
     return (
-        <div>
-        <Title />
-        <Upload onUploadChange={this.onUploadChange}/>
-        <div style={{
-            textAlign:"center",
-            marginLeft:"100px",
-            marginTop:"10px"}}>
-            <div> Please Enter a Unique Identifier </div>
-            <TextField
-                value={this.state.Identifier}
-                onChange={this.onIdentifierChange}>
-            </TextField>
-        </div>
-        <Methods onMethodsChange={this.onMethodsChange}/>
-        <Button variant='raised'  onClick={this.PostData}>
-            Submit
-        </Button>
-        <div1> Unique Identifier: {this.state.Identifier} </div1>
-        <div2> Method requested: {this.state.Methods} </div2>
-        <div3> Original Image </div3>
-        <img src={this.state.currentImageString}>
-        <div> Picture Metrics </div>
+       <div>
+        <div>  
+            <Title />
+            <Upload onUploadChange={this.onUploadChange}/>
+            <Identifier onIdentifierChange={this.onIdentifierChange} /> 
+            <Methods onMethodsChange={this.onMethodsChange}/>
+            
+            
+            <Button variant='raised'  onClick={this.PostData}> 
+                Submit
+            </Button>
+
+           <div style={{marginTop: '30px', marginLeft: "100px"}}>
+                Identifier: {this.state.Identifier}
+            </div>
+
+            <div style={{marginTop: '30px', marginLeft:"100px"}}> 
+                Method requested: {this.state.methods} 
+            </div>
+            
+            <div style={{marginTop: '30px', marginLeft:"100px",
+                            marginBottom:'30px'}}> 
+                Original Image 
+            </div>
+            <img src= {Images}
+                height = {'50%'}
+                width = {'50%'}
+                />
+            <div style={{marginTop: '30px'}}> 
+                Picture Metrics 
+            </div>
+         </div>
         <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell> Metrics </TableCell>
-                    </TableRow>
-                </TableHead>
                 {tabledata}
         </Table>
     </div>
-    );
+    )
   }
 }
 

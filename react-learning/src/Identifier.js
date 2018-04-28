@@ -41,9 +41,6 @@ export default class Identifier extends React.Component {
             value={this.state.Identifier}
             onChange={this.onIdentifierChange}>
         </TextField>
-        <Button onClick={this.onButtonClick}>
-            Log Text Field Data
-        </Button>
         <div> {this.state.errorIdentifier} </div>
       </div>
     )
