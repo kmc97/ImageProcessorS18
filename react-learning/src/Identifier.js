@@ -12,8 +12,9 @@ export default class Identifier extends React.Component {
   
   onIdentifierChange = (event) => {
         this.setState({"Identifier":event.target.value}, () => {
-            console.log(this.state.Identifier)});
-        this.props.onIdentifierChange(event);
+//            console.log(this.state.Identifier)});
+        });
+          this.props.onIdentifierChange(event);
   }
 
     /*
