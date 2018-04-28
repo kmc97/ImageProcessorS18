@@ -120,5 +120,5 @@ def process_time(t1):
     t2 = time_now()
     duration = t2-t1
     dur = (duration.days,duration.seconds, duration.microseconds)
-    seconds = dur[2]*0.000001
-    return seconds
+    milli_seconds = dur[2]/1000
+    return milli_seconds
