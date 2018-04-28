@@ -21,12 +21,14 @@ export default class App extends Component {
   }
 
   onUploadChange = (event) => {
+    console.log(event);
     this.setState({"currentImageString":event})
+  console.log(this.state.currentImageString)
+
   }
 
   onMethodsChange = (event) => {
     this.setState({"methods":event.target.value});
-    console.log(this.state.methods)
   }
 
   onIdentifierChange = (event) => {
@@ -89,32 +91,30 @@ export default class App extends Component {
     
     return tabledata;
   };
-
-  DisplayImages = () => {
-    if (this.state.currentImageString === 0) {
-      return [];
-    }
 /*
-    var name, count = 0;
-    for (name in this.state.currentImageString) {
-      if(this.state.currentImageString.hasOwnProperty(name)) {
-        count++;
-      }
-      console.log(count)
+  DisplayImages = () => {
+    var Images = this.props.currentImageString;
+    var Img = [];
+    const listImg = Images.map((Image) =>
+      {Image});
+
+    return listImg
+    /*
+    for (var name in dictImg) {
+      Img.push(dictImg[name]);
+        console.log(Img)
     }
-*/
-    var Images = [];
-    for (var i =0; i<5; i++) {
-      console.log(this.state.currentImageString)
-      Images.push(this.state.currentImageString)
-      console.log(Images)
-    return Images
-  }
+    
+    return Img
   }
   
+  */
+
   render() {
     var tabledata = this.createTable();
-    var Images = this.DisplayImages();
+    //var Img = this.DisplayImages();
+    
+        
     return (
        <div>
         <div>  
@@ -140,7 +140,7 @@ export default class App extends Component {
                             marginBottom:'30px'}}> 
                 Original Image 
             </div>
-            <img src= {Images}
+            <img src= {this.state.currentImageString}
                 height = {'50%'}
                 width = {'50%'}
                 />
