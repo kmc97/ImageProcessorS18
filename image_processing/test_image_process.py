@@ -18,8 +18,7 @@ def test_pic_metrics():
 
     assert(metrics[0] == 1592067)  # number of pixels
     assert(metrics[1] == (589,901,3)) #geometry of the image
-    assert(metrics[2] == [0,255]) # min max intesities of pic
-    assert(round(metrics[3]) == 87)
+    assert(round(metrics[2]) == 87)
 
 def test_process_time():
     # makes sure to take difference of the times
@@ -33,12 +32,12 @@ def test_output_exists():
     b64 = image_to_b64('go_bobcats.jpg')
     export_file_type = ('.jpg')
     results = process_contrast_stretch(UUID, b64, export_file_type)
-    print(results[4])
     assert (results[0] == 'test')
     assert (results[1].minute > 0)
     assert (results[2] == 'contrast stretching')
     assert (results[3] > 0)
     assert (results[4] != None)
-    assert(results[5] != b64)
+    assert(results[5] == b64)
+    assert(results[6] != b64)
  
     

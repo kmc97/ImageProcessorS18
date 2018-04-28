@@ -90,14 +90,13 @@ def pic_metrics(np_pic):
     """ function takes in numpy array of image and outputs all sorts of fun  metrics
     
     :param np_pic: numpy array of desired image
-    :return metrics: number of pixels, geometry of image, (min, max), average value of pixel
+    :return metrics: number of pixels, geometry of image, average value of pixel
     
     """
     num_pixels = np_pic.size
     geo_image = np_pic.shape
-    min_max = [np_pic.min(), np_pic.max()]
     avg_val = np_pic.mean()
-    return num_pixels, geo_image, min_max, avg_val
+    return num_pixels, geo_image, avg_val
 
 def time_now():
     

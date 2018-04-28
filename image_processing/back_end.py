@@ -14,7 +14,7 @@ def process_contrast_stretch(UUID, b64_string, export_file_type):
     :param b64_string:  Recieved from front-end, contains b64 of desired image
     :param export_file_type: User input of desired file type
     :raises TypeError:  From check_b64,if input data is not base64
-    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the processed image with the histogram
+    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the preprocesed and processed image with the histogram
     """
     
     check_b64(b64_string)
@@ -30,7 +30,7 @@ def process_contrast_stretch(UUID, b64_string, export_file_type):
     display_histogram(contrast, UUID + export_file_type)
     b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
-    b64_processed =  [UUID, t1, 'contrast stretching', dur_process, metrics, b64_p]
+    b64_processed =  [UUID, t1, 'contrast stretching', dur_process, metrics, b64_string, b64_p]
     logging.info('Image Successfully proccessed')
     
     return b64_processed
@@ -43,7 +43,7 @@ def process_adapt_equalization(UUID, b64_string, export_file_type):
     :param b64_string:  Recieved from front-end, contains b64 of desired image
     :param export_file_type: User input of desired file type
     :raises TypeError:  From check_b64,if input data is not base64
-    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, type of image processing, duration of processing, image metrics and the b64 string of the processed image with the histogram
+    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, type of image processing, duration of processing, image metrics and the b64 string of the preprocessed and processed image with the histogram
     """
  
     check_b64(b64_string)
@@ -59,7 +59,7 @@ def process_adapt_equalization(UUID, b64_string, export_file_type):
     display_histogram(adapt_eq, UUID + export_file_type)
     b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
-    b64_processed =  [UUID, t1, 'adaptive equalization', dur_process, metrics, b64_p]
+    b64_processed =  [UUID, t1, 'adaptive equalization', dur_process, metrics, b64_string, b64_p]
     logging.info('Image Successfully proccessed')
         
     return b64_processed
@@ -72,7 +72,7 @@ def process_histogram_equalization(UUID, b64_string, export_file_type):
     :param b64_string:  Recieved from front-end, contains b64 of desired image
     :param export_file_type: User input of desired file type
     :raises TypeError: From check_b64, raises error if input is not base64
-    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the processed image with the histogram
+    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the preprocessed and processed image with the histogram
     """
     
     check_b64(b64_string)
@@ -88,7 +88,7 @@ def process_histogram_equalization(UUID, b64_string, export_file_type):
     display_histogram(histo, UUID + export_file_type)
     b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
-    b64_processed =  [UUID, t1, 'histogram equalization', dur_process, metrics, b64_p]
+    b64_processed =  [UUID, t1, 'histogram equalization', dur_process, metrics, b64_string, b64_p]
     logging.info('Image Successfully proccessed')
     
     return b64_processed
@@ -104,7 +104,7 @@ def process_reverse_image(UUID, b64_string, export_file_type):
     :param export_file_type: User input of desired file type
     :raises TypeError: From check_b64, if input data is not base64
     :raises ValueError: From check_image_input(), if not .jpg, .png, tiff
-    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the processed image with the histogram
+    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the pre processed and processed image with the histogram
     """
  
     check_b64(b64_string)
@@ -121,7 +121,7 @@ def process_reverse_image(UUID, b64_string, export_file_type):
     logging.info('Image Successfully proccessed')
     b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
-    b64_processed =  [UUID, t1, 'reverse video', dur_process, metrics, b64_p]
+    b64_processed =  [UUID, t1, 'reverse video', dur_process, metrics, b64_string, b64_p]
     logging.info('Image Successfully proccessed')
     
     return b64_processed
@@ -135,7 +135,7 @@ def process_log_compression(UUID, b64_string, export_file_type):
     :param export_file_type: User input of desired file type
     :raises TypeError: From check_b64, if input data is not base64
     :raises ValueError: From check_image_input(), if not .jpg, .png, tiff
-    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the processed image with the histogram
+    :returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the preprocessed and processed image with the histogram
     """
  
     check_b64(b64_string)
@@ -151,7 +151,7 @@ def process_log_compression(UUID, b64_string, export_file_type):
     display_histogram(log_comp, UUID + export_file_type)
     b64_p = image_to_b64(UUID + export_file_type)
     dur_process = process_time(t1)
-    b64_processed =  [UUID, t1, 'log_compression', dur_process, metrics, b64_p]
+    b64_processed =  [UUID, t1, 'log_compression', dur_process, metrics, b64_string, b64_p]
     logging.info('Image Successfully proccessed')
         
     return b64_processed
