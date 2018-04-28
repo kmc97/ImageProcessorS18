@@ -5,7 +5,7 @@ class Upload extends Component {
   constructor() {
 		super();		
 		this.state = {
-      currentImageString: [],
+      currentImageString: ["name": "", "bs64":""],
       errorImage: '',
 		}
 	} 
@@ -22,7 +22,7 @@ class Upload extends Component {
         reader.readAsDataURL(file);
 		    reader.onloadend = () => {
             var newImage = this.state.currentImageString.slice();
-            newImage.push([{"name":file_name}, {"bs64":reader.result}])
+            newImage.push({"name":file_name, "bs64":reader.result})
 			      this.setState({currentImageString:newImage});
             console.log(this.state.currentImageString)  
             this.props.onUploadChange(reader.result);
@@ -47,10 +47,6 @@ class Upload extends Component {
               <div> Drop your files or click to upload </div>
         </Dropzone>
         
-        <img value={this.state.currentImageString} 
-                          height={'50%'}
-                          width={'50%'}
-        />
         <h2 style ={{color: "red"}}> 
             {this.state.errorImage} 
         </h2>

@@ -47,7 +47,7 @@ export default class Methods extends React.Component {
       }}>
         <FormControl>
             <InputLabel htmlFor="select-multiple-checkbox">
-                Choose One or More Methods
+                Only one method allowed
             </InputLabel>
           <Select
             multiple
