@@ -3,12 +3,14 @@ from flask_cors import CORS
 from pymodm import MongoModel, fields, connect
 import models
 from models import return_entry, add_file
+import logging
 
-from image_processing.back_end import process_contrast_stretch, process_adapt_equalization,\
+from image_processing.back_end import process_contrast_stretch, process_adapt_equalization, \
     process_histogram_equalization, process_reverse_image, process_log_compression
 
-import numpy as np
-import base64
+
+logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p',
+                    level=logging.DEBUG)
 
 app = Flask(__name__)
 CORS(app)
@@ -29,21 +31,16 @@ def original_image():
     export_file_type = r["export_file_type"]
     b64_string = b64_string.encode("utf-8")
 
-
     if image_proc_type == "contrast stretching":
         info = process_contrast_stretch(name, b64_string, export_file_type)
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
         pic_size = metrics_list[1]
         avg_value = metrics_list[3]
+        metrics_output = [num_pixels, pic_size, avg_value]
         info[5] = info[5].decode("utf-8")
 
-        add_file(info[0], info[1], info[2], info[3], info[4], info[5])
-
-    print_this = {"filename": info[5]}
-    return jsonify(print_this)
-
-
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
 
 
 @app.route('/imageprocessor/original_image/getthedata/<filename>', methods=['GET'])
