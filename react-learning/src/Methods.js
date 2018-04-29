@@ -7,10 +7,11 @@ import Select from 'material-ui/Select';
 import Checkbox from 'material-ui/Checkbox';
 
 const names = [
-  'Histogram Equalization',
-  'Contrast Stretching',
-  'Log Compression',
-  'Reverse Video'
+  'histogram equalization',
+  'contrast stretching',
+  'log compression',
+  'reverse video',
+  'adaptive equalization'
 ];
 
 const ITEM_HEIGHT = 48;
