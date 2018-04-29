@@ -34,7 +34,7 @@ def original_image():
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
         pic_size = metrics_list[1]
-        avg_value = metrics_list[3]
+        avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
         info[5] = info[5].decode("utf-8")
 
@@ -45,7 +45,7 @@ def original_image():
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
         pic_size = metrics_list[1]
-        avg_value = metrics_list[3]
+        avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
         info[5] = info[5].decode("utf-8")
 
@@ -56,7 +56,7 @@ def original_image():
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
         pic_size = metrics_list[1]
-        avg_value = metrics_list[3]
+        avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
         info[5] = info[5].decode("utf-8")
 
@@ -67,7 +67,7 @@ def original_image():
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
         pic_size = metrics_list[1]
-        avg_value = metrics_list[3]
+        avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
         info[5] = info[5].decode("utf-8")
 
@@ -78,13 +78,13 @@ def original_image():
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
         pic_size = metrics_list[1]
-        avg_value = metrics_list[3]
+        avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
         info[5] = info[5].decode("utf-8")
 
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
 
-    print_this = {"filename": info[5]}
+    print_this = {"base64": info[5]}
     return jsonify(print_this)
 
 
