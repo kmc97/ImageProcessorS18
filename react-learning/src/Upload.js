@@ -24,6 +24,8 @@ class Upload extends Component {
           //  var newImage = this.state.currentImageString;
          //   newImage.push({"name":file_name, "bs64":reader.result});
             var newImage = reader.result;
+		newImage = newImage.split('base64,')
+		newImage = newImage[1]
             console.log(newImage);
 			      this.setState({"currentImageString": newImage});
             console.log(this.state.currentImageString);  
