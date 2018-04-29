@@ -29,7 +29,9 @@ export default class App extends Component {
   }
 
   onMethodsChange = (event) => {
-    this.setState({"methods":event.target.value});
+	var method = event.target.value;
+	method = method[0]
+    this.setState({"methods":method});
   }
 
   onIdentifierChange = (event) => {
