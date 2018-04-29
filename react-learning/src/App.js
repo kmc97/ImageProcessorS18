@@ -24,7 +24,6 @@ export default class App extends Component {
     console.log(event);
     this.setState({"currentImageString":event})
   console.log(this.state.currentImageString)
-
   }
 
   onMethodsChange = (event) => {
@@ -93,28 +92,17 @@ export default class App extends Component {
   };
 /*
   DisplayImages = () => {
-    var Images = this.props.currentImageString;
+    var Images = this.state.currentImageString;
     var Img = [];
-    const listImg = Images.map((Image) =>
-      {Image});
-
-    return listImg
-    /*
-    for (var name in dictImg) {
-      Img.push(dictImg[name]);
-        console.log(Img)
-    }
     
+    for (var i=0; i<this.state.currentImageString.length; i++) {
+
     return Img
   }
-  
   */
-
   render() {
     var tabledata = this.createTable();
-    //var Img = this.DisplayImages();
     
-        
     return (
        <div>
         <div>  
@@ -140,7 +128,7 @@ export default class App extends Component {
                             marginBottom:'30px'}}> 
                 Original Image 
             </div>
-            <img src= {this.state.currentImageString}
+            <img src= {Image}
                 height = {'50%'}
                 width = {'50%'}
                 />
