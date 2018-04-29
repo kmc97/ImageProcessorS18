@@ -53,7 +53,7 @@ export default class Methods extends React.Component {
             multiple
             value={this.state.methods}
             onChange={this.handleChange}
-            input={<Input id="select-multiple-checkbox" />}
+	    input={<Input id="select-multiple-checkbox" />}
             MenuProps={MenuProps}
             renderValue={selected => selected.join(', ')}
           >
