@@ -11,7 +11,9 @@ import numpy as np
 import base64
 
 app = Flask(__name__)
+app.debug = True
 CORS(app)
+
 connect("mongodb://localhost:27017/imageprocessor")
 
 
