@@ -7,6 +7,7 @@ import Identifier from "./Identifier.js";
 import axios from 'axios';
 import Button from 'material-ui/Button';
 import Table, { TableCell, TableRow} from 'material-ui/Table';
+import TextField from "material-ui/TextField";
 
 export default class App extends Component {
   constructor() {
@@ -16,7 +17,8 @@ export default class App extends Component {
       "processedImg":"",
       "originalImg":"",
       "duration":"",
-      "timestamp":""
+      "timestamp":"",
+      "export_file_type":""
     }
   }
 
@@ -32,14 +34,20 @@ export default class App extends Component {
 
   onIdentifierChange = (event) => {
     this.setState({"Identifier":event.target.value}, () => {console.log(this.state.Identifier)}); 
+  
   }
 
+  onExportFileTypeChange = (event) => {
+    this.setState({"export_file_type":event.target.value}, () => {
+        console.log(this.state.export_file_type);
+  })
+  }
     PostData = () => {
-        var url = "http://0.0.0.0:5000/imageprocessor/original_image"
+        var url = "http://127.0.0.1:5000/imageprocessor/original_image"
           var body = {
               "image_proc_type": this.state.methods,
               "file_name": this.state.Identifier,
-              "base64": this.state.currentImageString,
+              "base_64": this.state.currentImageString,
               "export_file_type": this.state.export_file_type
           }
           console.log(body);
@@ -49,8 +57,9 @@ export default class App extends Component {
       }
   
       GetData = () => {       
-   var url = "http://0.0.0.0:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
-          axios.get(url).then( (response) => {
+ //  var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
+       var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/noor"   
+        axios.get(url).then( (response) => {
               console.log(response);
               console.log(response.status);
               this.setState({"data":response});
@@ -128,7 +137,17 @@ export default class App extends Component {
             <div style={{marginTop: '30px', marginLeft:"100px"}}> 
                 Method requested: {this.state.methods} 
             </div>
+
+            <TextField
+                value={this.state.export_file_type}
+                onChange={this.onExportFileTypeChange}>
+                Please specify file type 
+            </TextField>
             
+            <Button variant='raised' onClick={this.GetData}>
+                Get Data
+            </Button>
+
             <div style={{marginTop: '30px', marginLeft:"100px",
                             marginBottom:'30px'}}> 
                 Original Image 
