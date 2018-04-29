@@ -34,27 +34,32 @@ export default class App extends Component {
     this.setState({"Identifier":event.target.value}, () => {console.log(this.state.Identifier)}); 
   }
 
-  PostData = () => {
-      var url = "http://0.0.0.0:5000/imageprocessor/processed_image"
-        var body = {
-            "image_proc_type": this.state.methods,
-            "file_name": this.state.Identifier,
-            "base64_image": this.state.currentImageString
-        }
-        console.log(body)
-        console.log(this.state.Identifier);
-        axios.post(url, body).then( (response) => {
-            this.setState({Identifier_back: response.data.file_name})
-            this.setState({metrics: response.data.metrics})
-            this.setState({timestamp: response.data.timestamp})
-            this.setState({duration: response.data.duration})
-            this.setState({processedImg: response.data.base64_proc})
-      
-        })
-          .catch(function (error) {
-            console.log(error);
-          });
+    PostData = () => {
+        var url = "http://0.0.0.0:5000/imageprocessor/original_image"
+          var body = {
+              "image_proc_type": this.state.methods,
+              "file_name": this.state.Identifier,
+              "base64": this.state.currentImageString,
+              "export_file_type": this.state.export_file_type
+          }
+          console.log(body);
+          axios.post(url, body).then( (response) => {
+            console.log(response);
+          })
       }
+  
+      GetData = () => {       
+   var url = "http://0.0.0.0:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
+          axios.get(url).then( (response) => {
+              console.log(response);
+              console.log(response.status);
+              this.setState({"data":response});
+          })
+            .catch(function (error) {
+             console.log(error);
+           });
+       }
+  
       
   
   createTable = () => {
