@@ -18,14 +18,18 @@ export default class App extends Component {
       "originalImg":"",
       "duration":"",
       "timestamp":"",
-      "export_file_type":""
+      "export_file_type":"",
+      "filename": "",
+      "processingType":"",
+      "img_extension":"",
+      "imgPath":"",
     }
   }
 
   onUploadChange = (event) => {
     console.log(event);
     this.setState({"currentImageString":event})
-  console.log(this.state.currentImageString)
+ // console.log(this.state.currentImageString)
   }
 
   onMethodsChange = (event) => {
@@ -41,15 +45,21 @@ export default class App extends Component {
 
   onExportFileTypeChange = (event) => {
     this.setState({"export_file_type":event.target.value}, () => {
-        console.log(this.state.export_file_type);
+       // console.log(this.state.export_file_type);
   })
   }
     PostData = () => {
         var url = "http://127.0.0.1:5000/imageprocessor/original_image"
-          var body = {
+        var newImage = this.state.currentImageString.split('base64,')
+        var originalImg = newImage[1];
+        var img_extension = newImage[0];
+        console.log(img_extension);
+        this.setState({"img_extension":img_extension});
+        console.log(this.state.img_extension);
+        var body = {
               "image_proc_type": this.state.methods,
               "file_name": this.state.Identifier,
-              "base_64": this.state.currentImageString,
+              "base_64": originalImg,
               "export_file_type": this.state.export_file_type
           }
           console.log(body);
@@ -59,12 +69,32 @@ export default class App extends Component {
       }
   
       GetData = () => {       
- //  var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
-       var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/noor"   
+   var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
         axios.get(url).then( (response) => {
               console.log(response);
               console.log(response.status);
-              this.setState({"data":response});
+              this.setState({"filename":response.data.filename});
+            console.log(response.data.filename);
+            console.log(this.state.filename);
+            this.setState({"timestamp":response.data.timestamp});
+            console.log(this.state.timestamp);
+            this.setState({"processingType":response.data.processing_type});
+            console.log(this.state.processingType);
+            this.setState({"metrics":response.data.metrics});
+            
+            var processedImg = [this.state.img_extension];
+            console.log(this.state.img_extension);
+            processedImg.push("base64,");
+            console.log(processedImg);
+            processedImg.push(response.data.base_64_processed);
+            console.log(response.data.base_64_processed);
+            console.log(processedImg);
+            var img = processedImg.join("");
+            this.setState({"processedImg":img});
+            console.log(this.state.processedImg);
+            
+            this.setState({"duration":response.data.processing_duration});
+            console.log(this.state.duration)
           })
             .catch(function (error) {
              console.log(error);
@@ -75,7 +105,11 @@ export default class App extends Component {
   
   createTable = () => {
     var tabledata = [];
-      tabledata.push(
+    var min_max = this.state.metrics[1];
+    console.log(min_max);
+    var min = min_max;
+    //console.log(min)
+    tabledata.push(
         <div>
         <TableRow>
             <TableCell> Time Stamp </TableCell>
@@ -90,16 +124,12 @@ export default class App extends Component {
             <TableCell> {this.state.metrics[0]} </TableCell>
         </TableRow>
         <TableRow>
-            <TableCell> Geometry </TableCell>
+            <TableCell> Minimum </TableCell>
             <TableCell> {this.state.metrics[1]} </TableCell>
         </TableRow>
         <TableRow>
-            <TableCell> Min - Max </TableCell>
-            <TableCell> {this.state.metrics[2]} </TableCell>
-        </TableRow>
-        <TableRow>
-            <TableCell> Average </TableCell>
-            <TableCell> {this.state.metrics[3]} </TableCell>
+            <TableCell> Maximum </TableCell>
+            <TableCell> {this.state.metrics[1]} </TableCell>
         </TableRow>
         </div>
       );
@@ -116,6 +146,13 @@ export default class App extends Component {
     return Img
   }
   */
+  getUrl = () => {
+    var imgPath = this.state.processedImg.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
+    this.setState({"imgPath":imgPath});
+    console.log(this.state.imgPath)
+    window.open(this.state.imgPath)
+  }
+  
   render() {
     var tabledata = this.createTable();
     
@@ -139,6 +176,8 @@ export default class App extends Component {
             <div style={{marginTop: '30px', marginLeft:"100px"}}> 
                 Method requested: {this.state.methods} 
             </div>
+            
+            <div> Choose a file type to download </div>
 
             <TextField
                 value={this.state.export_file_type}
@@ -150,14 +189,21 @@ export default class App extends Component {
                 Get Data
             </Button>
 
-            <div style={{marginTop: '30px', marginLeft:"100px",
+            <h2 style={{marginTop: '30px', marginLeft:"100px",
                             marginBottom:'30px'}}> 
                 Original Image 
-            </div>
-            <img src= {Image}
+            </h2>
+            <img src= {this.state.currentImageString}
                 height = {'50%'}
                 width = {'50%'}
                 />
+      
+            <h2> Processed Image </h2>
+            <img src={this.state.processedImg}
+                height = {"50%"}
+                width = {"50%"}
+                />
+
             <div style={{marginTop: '30px'}}> 
                 Picture Metrics 
             </div>
@@ -165,6 +211,10 @@ export default class App extends Component {
         <Table>
                 {tabledata}
         </Table>
+        
+        <Button variant='raised' onClick={this.getUrl}>
+            Save
+        </Button>
     </div>
     )
   }
