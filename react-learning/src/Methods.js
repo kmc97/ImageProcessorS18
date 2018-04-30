@@ -7,7 +7,6 @@ import Select from 'material-ui/Select';
 import Checkbox from 'material-ui/Checkbox';
 
 const names = [
-  'histogram equalization',
   'contrast stretching',
   'log compression',
   'reverse video',
