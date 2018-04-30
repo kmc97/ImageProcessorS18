@@ -27,6 +27,7 @@ def original_image():
     r = request.get_json()
     name = r["file_name"]
     b64_string = r["base_64"]
+#    b64_string = b64_string[0]
     image_proc_type = r["image_proc_type"]
     export_file_type = r["export_file_type"]
     b64_string = b64_string.encode("utf-8")
@@ -39,8 +40,8 @@ def original_image():
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
         info[5] = info[5].decode("utf-8")
-
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        return jsonify({"info": info[0]})
 
     if image_proc_type == "adaptive equalization":
         info = process_adapt_equalization(name, b64_string, export_file_type)
@@ -86,9 +87,8 @@ def original_image():
 
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
 
-    print_this = {"base64": info[5]}
-    return jsonify(print_this)
-
+#    print_this = {"base64": info[2]}
+    return jsonify("it worked")
 
 
 

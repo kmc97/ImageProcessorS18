@@ -24,8 +24,8 @@ class Upload extends Component {
           //  var newImage = this.state.currentImageString;
          //   newImage.push({"name":file_name, "bs64":reader.result});
             var newImage = reader.result;
-		newImage = newImage.split('base64,')
-		newImage = newImage[1]
+	//	newImage = newImage.split('base64,')
+	//	newImage = newImage[1]
             console.log(newImage);
 			      this.setState({"currentImageString": newImage});
             console.log(this.state.currentImageString);  
@@ -50,7 +50,6 @@ class Upload extends Component {
               >
               <div> Drop your files or click to upload </div>
         </Dropzone>
-        
         <h2 style ={{color: "red"}}> 
             {this.state.errorImage} 
         </h2>
