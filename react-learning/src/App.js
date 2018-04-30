@@ -81,7 +81,6 @@ export default class App extends Component {
             this.setState({"processingType":response.data.processing_type});
             console.log(this.state.processingType);
             this.setState({"metrics":response.data.metrics});
-            
             var processedImg = [this.state.img_extension];
             console.log(this.state.img_extension);
             processedImg.push("base64,");
@@ -92,7 +91,6 @@ export default class App extends Component {
             var img = processedImg.join("");
             this.setState({"processedImg":img});
             console.log(this.state.processedImg);
-            
             this.setState({"duration":response.data.processing_duration});
             console.log(this.state.duration)
           })
@@ -107,7 +105,7 @@ export default class App extends Component {
     var tabledata = [];
     var min_max = this.state.metrics[1];
     console.log(min_max);
-    var min = min_max;
+    //var min = min_max[0];
     //console.log(min)
     tabledata.push(
         <div>
@@ -136,28 +134,39 @@ export default class App extends Component {
     
     return tabledata;
   };
-/*
+
   DisplayImages = () => {
     var Images = this.state.currentImageString;
     var Img = [];
-    
-    for (var i=0; i<this.state.currentImageString.length; i++) {
+    if (this.state.currentImageString === undefined) {
+        return [];
+     } else {
 
+    for (var i=0; i<this.state.currentImageString.length; i++) {
+        console.log(this.state.currentImageString.length);
+        console.log(this.state.currentImageString[0]);
+        console.log(this.state.currentImageString[1]);
+        Img.push(
+          <img src= {this.state.currentImageString[i].bs64} 
+                height = {"50%"} 
+                width = {"50%"}
+          />
+        )}
     return Img
-  }
-  */
+  }}
+  
   getUrl = () => {
     var imgPath = this.state.processedImg.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
-    this.setState({"imgPath":imgPath});
-    console.log(this.state.imgPath)
+    this.setState({"imgPath":imgPath}, ()  => {console.log(this.state.imgPath)})
     window.open(this.state.imgPath)
   }
   
   render() {
     var tabledata = this.createTable();
-    
+    var Img = this.DisplayImages();
+
     return (
-       <div>
+      <div>
         <div>  
             <Title />
             <Upload onUploadChange={this.onUploadChange}/>
@@ -193,11 +202,9 @@ export default class App extends Component {
                             marginBottom:'30px'}}> 
                 Original Image 
             </h2>
-            <img src= {this.state.currentImageString}
-                height = {'50%'}
-                width = {'50%'}
-                />
-      
+            
+            <div> {Img} </div>
+
             <h2> Processed Image </h2>
             <img src={this.state.processedImg}
                 height = {"50%"}
