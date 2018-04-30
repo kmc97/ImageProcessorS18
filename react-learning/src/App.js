@@ -20,14 +20,16 @@ export default class App extends Component {
       "timestamp":"",
       "export_file_type":"",
       "filename": "",
-      "processingType":""
+      "processingType":"",
+      "img_extension":"",
+      "imgPath":"",
     }
   }
 
   onUploadChange = (event) => {
     console.log(event);
     this.setState({"currentImageString":event})
-  console.log(this.state.currentImageString)
+ // console.log(this.state.currentImageString)
   }
 
   onMethodsChange = (event) => {
@@ -43,13 +45,17 @@ export default class App extends Component {
 
   onExportFileTypeChange = (event) => {
     this.setState({"export_file_type":event.target.value}, () => {
-        console.log(this.state.export_file_type);
+       // console.log(this.state.export_file_type);
   })
   }
     PostData = () => {
         var url = "http://127.0.0.1:5000/imageprocessor/original_image"
-        
-        var originalImg = this.state.currentImageString[1];
+        var newImage = this.state.currentImageString.split('base64,')
+        var originalImg = newImage[1];
+        var img_extension = newImage[0];
+        console.log(img_extension);
+        this.setState({"img_extension":img_extension});
+        console.log(this.state.img_extension);
         var body = {
               "image_proc_type": this.state.methods,
               "file_name": this.state.Identifier,
@@ -75,8 +81,16 @@ export default class App extends Component {
             this.setState({"processingType":response.data.processing_type});
             console.log(this.state.processingType);
             this.setState({"metrics":response.data.metrics});
-            this.setState({"processedImg":response.base_64_processed});
+            
+            var processedImg = [this.state.img_extension];
+            console.log(this.state.img_extension);
+            processedImg.push("base64,");
+            processedImg.push(response.data.base_64_processed);
+            console.log(response.data.base_64_processed);
+            var img = processedImg.join("");
+            this.setState({"processedImg":img});
             console.log(this.state.processedImg);
+            
             this.setState({"duration":response.data.processing_duration});
             console.log(this.state.duration)
           })
@@ -89,7 +103,11 @@ export default class App extends Component {
   
   createTable = () => {
     var tabledata = [];
-      tabledata.push(
+    var min_max = this.state.metrics[1];
+    console.log(min_max);
+    var min = min_max;
+    //console.log(min)
+    tabledata.push(
         <div>
         <TableRow>
             <TableCell> Time Stamp </TableCell>
@@ -126,6 +144,13 @@ export default class App extends Component {
     return Img
   }
   */
+  getUrl = () => {
+    var imgPath = this.state.processedImg.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
+    this.setState({"imgPath":imgPath});
+    console.log(this.state.imgPath)
+    window.open(this.state.imgPath)
+  }
+  
   render() {
     var tabledata = this.createTable();
     
@@ -184,6 +209,10 @@ export default class App extends Component {
         <Table>
                 {tabledata}
         </Table>
+        
+        <Button variant='raised' onClick={this.getUrl}>
+            Save
+        </Button>
     </div>
     )
   }
