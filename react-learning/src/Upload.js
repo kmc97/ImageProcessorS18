@@ -11,7 +11,7 @@ class Upload extends Component {
 	} 
 
 	onUpload = (files) => {
-  //  for (var i=0; i<files.length; i++) {   
+//    for (var i=0; i<files.length; i++) {   
         const reader = new FileReader()
 		    const file = files[0];
         console.log(file);
