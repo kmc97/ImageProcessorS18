@@ -85,8 +85,10 @@ export default class App extends Component {
             var processedImg = [this.state.img_extension];
             console.log(this.state.img_extension);
             processedImg.push("base64,");
+            console.log(processedImg);
             processedImg.push(response.data.base_64_processed);
             console.log(response.data.base_64_processed);
+            console.log(processedImg);
             var img = processedImg.join("");
             this.setState({"processedImg":img});
             console.log(this.state.processedImg);
