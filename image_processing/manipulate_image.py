@@ -76,7 +76,7 @@ def check_image_input(export_type):
     :returns True: if pass test
     """
     
-    if(export_type.lower().endswith('.jpg') or export_type.lower().endswith('.png')or export_type.lower().endswith('.tiff')):
+    if export_type.lower().endswith('.jpg') or export_type.lower().endswith('.png') or export_type.lower().endswith('.tiff'):
         return True
     else:
         logging.info('incorrect export file extension')
@@ -91,7 +91,7 @@ def check_UUID_input(UUID):
     :returns True: if pass test
     """
     
-    if (isinstance(UUID, str)):
+    if isinstance(UUID, str):
         if UUID.isalnum():
             return True
         else:
@@ -100,4 +100,17 @@ def check_UUID_input(UUID):
     else:
         logging.info('UUID is not a string')
         raise ValueError("UUID should be input as a string")
-    
+
+
+def check_proc_type(image_proc_type):
+
+    """ check_proc_type function checks to make sure image_proc_type is a string
+        :param image_proc_type: user selected processing technique
+        :raises ValueError: if image_proc_type is not a string
+        :returns True: if pass test """
+
+    if isinstance(image_proc_type, str):
+        return True
+    else:
+        logging.info('Image processing type is not a string')
+        raise ValueError('Please choose only one processing technique.')
