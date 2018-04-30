@@ -50,24 +50,28 @@ export default class App extends Component {
   }
     PostData = () => {
         var url = "http://127.0.0.1:5000/imageprocessor/original_image"
-        var newImage = this.state.currentImageString.split('base64,')
-        var originalImg = newImage[1];
-        var img_extension = newImage[0];
-        console.log(img_extension);
-        this.setState({"img_extension":img_extension});
-        console.log(this.state.img_extension);
-        var body = {
-              "image_proc_type": this.state.methods,
-              "file_name": this.state.Identifier,
-              "base_64": originalImg,
-              "export_file_type": this.state.export_file_type
-          }
+        for (var i=0; i<this.state.currentImageString.length; i++) {
+            var url = "http://127.0.0.1:5000/imageprocessor/original_image"
+            var newImage = this.state.currentImageString[i].bs64.split('base64,')
+            var originalImg = newImage[1];
+            var img_extension = newImage[0];
+            var img_name = this.state.currentImageString[i].name;
+            console.log(img_name);
+            console.log(img_extension);
+            this.setState({"img_extension":img_extension});
+            console.log(this.state.img_extension);
+            var body = {
+                "image_proc_type": this.state.methods,
+                "file_name": this.state.Identifier + img_name,
+                "base_64": originalImg,
+                "export_file_type": this.state.export_file_type
+            }
           console.log(body);
           axios.post(url, body).then( (response) => {
             console.log(response);
           })
       }
-  
+    }
       GetData = () => {       
    var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
         axios.get(url).then( (response) => {
@@ -143,9 +147,9 @@ export default class App extends Component {
      } else {
 
     for (var i=0; i<this.state.currentImageString.length; i++) {
-        console.log(this.state.currentImageString.length);
-        console.log(this.state.currentImageString[0]);
-        console.log(this.state.currentImageString[1]);
+       // console.log(this.state.currentImageString.length);
+       // console.log(this.state.currentImageString[0]);
+       // console.log(this.state.currentImageString[1]);
         Img.push(
           <img src= {this.state.currentImageString[i].bs64} 
                 height = {"50%"} 
