@@ -13,7 +13,7 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      "metrics":"",
+      "metrics":[],
       "processedImg":"",
       "originalImg":"",
       "duration":"",
@@ -29,7 +29,7 @@ export default class App extends Component {
   onUploadChange = (event) => {
     console.log(event);
     this.setState({"currentImageString":event})
- // console.log(this.state.currentImageString)
+  console.log(this.state.currentImageString[2])
   }
 
   onMethodsChange = (event) => {
@@ -49,29 +49,42 @@ export default class App extends Component {
   })
   }
     PostData = () => {
-        var url = "http://127.0.0.1:5000/imageprocessor/original_image"
+        if (this.state.currentImageString === undefined) {
+            return []
+        } else { 
         for (var i=0; i<this.state.currentImageString.length; i++) {
+          (function(i) {
+
             var url = "http://127.0.0.1:5000/imageprocessor/original_image"
-            var newImage = this.state.currentImageString[i].bs64.split('base64,')
-            var originalImg = newImage[1];
-            var img_extension = newImage[0];
-            var img_name = this.state.currentImageString[i].name;
+            
+            var newImage = this.state.currentImageString[i];
+            var newImage_bs64 = newImage.bs64.split('base64,');
+            var originalImg = newImage_bs64[1];
+            var img_extension = newImage_bs64[0];
+            var img_name = newImage.name;
             console.log(img_name);
             console.log(img_extension);
             this.setState({"img_extension":img_extension});
             console.log(this.state.img_extension);
+            
             var body = {
                 "image_proc_type": this.state.methods,
                 "file_name": this.state.Identifier + img_name,
                 "base_64": originalImg,
                 "export_file_type": this.state.export_file_type
             }
-          console.log(body);
-          axios.post(url, body).then( (response) => {
+            console.log(body);
+          
+            axios.post(url, body).then(function (response) {
             console.log(response);
-          })
-      }
+          }, function(error) {
+            alert(error);
+          });
+      })(i);
     }
+}
+}
+
       GetData = () => {       
    var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
         axios.get(url).then( (response) => {
@@ -85,6 +98,7 @@ export default class App extends Component {
             this.setState({"processingType":response.data.processing_type});
             console.log(this.state.processingType);
             this.setState({"metrics":response.data.metrics});
+            console.log(this.state.metrics);
             var processedImg = [this.state.img_extension];
             console.log(this.state.img_extension);
             processedImg.push("base64,");
@@ -107,10 +121,17 @@ export default class App extends Component {
   
   createTable = () => {
     var tabledata = [];
-    var min_max = this.state.metrics[1];
-    console.log(min_max);
-    //var min = min_max[0];
-    //console.log(min)
+    if (this.state.metrics[1] === undefined) {
+         return [];
+      } else {
+        var min_max = this.state.metrics[1];
+        console.log(min_max);
+        var min = min_max[0];
+        console.log(min);
+        var max = min_max[1];
+        console.log(max);
+      }
+
     tabledata.push(
         <div>
         <TableRow>
@@ -127,11 +148,15 @@ export default class App extends Component {
         </TableRow>
         <TableRow>
             <TableCell> Minimum </TableCell>
-            <TableCell> {this.state.metrics[1]} </TableCell>
+            <TableCell> {min} </TableCell>
         </TableRow>
         <TableRow>
             <TableCell> Maximum </TableCell>
-            <TableCell> {this.state.metrics[1]} </TableCell>
+            <TableCell> {max} </TableCell>
+        </TableRow>
+        <TableRow>
+            <TableCell> Average </TableCell>
+            <TableCell> {this.state.metrics[2]} </TableCell>
         </TableRow>
         </div>
       );
@@ -161,8 +186,7 @@ export default class App extends Component {
   
   getUrl = () => {
     var imgPath = this.state.processedImg.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
-    this.setState({"imgPath":imgPath}, ()  => {console.log(this.state.imgPath)})
-    window.open(this.state.imgPath)
+    this.setState({"imgPath":imgPath}, ()  => {window.open(this.state.imgPath)});
   }
   
   render() {
@@ -177,7 +201,13 @@ export default class App extends Component {
             <Identifier onIdentifierChange={this.onIdentifierChange} /> 
             <Methods onMethodsChange={this.onMethodsChange}/>
             
-            
+            <div> Choose a file type to download(.jpg, .tiff, .png) </div>
+ 
+             <TextField
+                 value={this.state.export_file_type}
+                 onChange={this.onExportFileTypeChange}>
+                 Please specify file type
+            </TextField>
             <Button variant='raised'  onClick={this.PostData}> 
                 Submit
             </Button>
@@ -190,14 +220,7 @@ export default class App extends Component {
                 Method requested: {this.state.methods} 
             </div>
             
-            <div> Choose a file type to download </div>
-
-            <TextField
-                value={this.state.export_file_type}
-                onChange={this.onExportFileTypeChange}>
-                Please specify file type 
-            </TextField>
-            
+            <h3> Enter Unique Identifier and Obtain Stored Data </h3> 
             <Button variant='raised' onClick={this.GetData}>
                 Get Data
             </Button>
