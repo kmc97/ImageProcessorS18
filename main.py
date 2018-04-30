@@ -37,8 +37,8 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        info[6] = info[6].decode("utf-8")
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
         return jsonify({"info": info[0]})
 
     if image_proc_type == "adaptive equalization":
@@ -48,9 +48,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
+        info[6] = info[6].decode("utf-8")
 
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
 
     if image_proc_type == "histogram equalization":
         info = process_histogram_equalization(name, b64_string, export_file_type)
@@ -59,9 +59,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
+        info[6] = info[6].decode("utf-8")
 
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
 
     if image_proc_type == "reverse video":
         info = process_reverse_image(name, b64_string, export_file_type)
@@ -70,9 +70,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
+        info[6] = info[6].decode("utf-8")
 
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
 
     if image_proc_type == "log compression":
         info = process_log_compression(name, b64_string, export_file_type)
@@ -81,9 +81,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
+        info[6] = info[6].decode("utf-8")
 
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
 
 #    print_this = {"base64": info[2]}
     return jsonify("it worked")
