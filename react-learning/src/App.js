@@ -23,13 +23,13 @@ export default class App extends Component {
       "processingType":"",
       "img_extension":"",
       "imgPath":"",
+      "imgName":""
     }
   }
 
   onUploadChange = (event) => {
     console.log(event);
     this.setState({"currentImageString":event})
-  console.log(this.state.currentImageString[2])
   }
 
   onMethodsChange = (event) => {
@@ -51,71 +51,74 @@ export default class App extends Component {
     PostData = () => {
         if (this.state.currentImageString === undefined) {
             return []
-        } else { 
+        } else {
         for (var i=0; i<this.state.currentImageString.length; i++) {
-          (function(i) {
-
-            var url = "http://127.0.0.1:5000/imageprocessor/original_image"
-            
-            var newImage = this.state.currentImageString[i];
-            var newImage_bs64 = newImage.bs64.split('base64,');
-            var originalImg = newImage_bs64[1];
-            var img_extension = newImage_bs64[0];
-            var img_name = newImage.name;
-            console.log(img_name);
-            console.log(img_extension);
+           // try{throw i}
+           // catch(ii) {
+            var url = "http://127.0.0.1:5000/imageiprocessor/original_image";
+            var Img = {};
+            var Img  = this.state.currentImageString[i];
+            console.log(i);
+            console.log(Img);
+            var Img_bs64 = Img.bs64;
+            Img_bs64 = Img_bs64.split('base64,');
+            var originalImg = Img_bs64[1];
+            var img_extension = Img_bs64[0];
+            var imgName = this.state.Identifier + Img.name;
+           // this.setState({"imgName":imgName});
             this.setState({"img_extension":img_extension});
-            console.log(this.state.img_extension);
             
             var body = {
                 "image_proc_type": this.state.methods,
-                "file_name": this.state.Identifier + img_name,
+                "file_name": imgName,
                 "base_64": originalImg,
                 "export_file_type": this.state.export_file_type
             }
             console.log(body);
           
-            axios.post(url, body).then(function (response) {
+            axios.post(url, body).then( (response) => {
             console.log(response);
-          }, function(error) {
-            alert(error);
           });
-      })(i);
-    }
-}
+            }}
+   // }
 }
 
-      GetData = () => {       
-   var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.Identifier;
-        axios.get(url).then( (response) => {
-              console.log(response);
-              console.log(response.status);
-              this.setState({"filename":response.data.filename});
-            console.log(response.data.filename);
-            console.log(this.state.filename);
-            this.setState({"timestamp":response.data.timestamp});
-            console.log(this.state.timestamp);
-            this.setState({"processingType":response.data.processing_type});
-            console.log(this.state.processingType);
-            this.setState({"metrics":response.data.metrics});
-            console.log(this.state.metrics);
-            var processedImg = [this.state.img_extension];
-            console.log(this.state.img_extension);
-            processedImg.push("base64,");
-            console.log(processedImg);
-            processedImg.push(response.data.base_64_processed);
-            console.log(response.data.base_64_processed);
-            console.log(processedImg);
-            var img = processedImg.join("");
-            this.setState({"processedImg":img});
-            console.log(this.state.processedImg);
-            this.setState({"duration":response.data.processing_duration});
-            console.log(this.state.duration)
+
+      GetData = () => {
+        if (this.state.currentImageString === undefined) {
+          return []
+        } else {
+          for (var i=0; i<this.state.currentImageString.length; i++) {
+            var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.imgName;
+            axios.get(url).then( (response) => {
+                console.log(response);
+                console.log(response.status);
+                this.setState({"filename":response.data.filename});
+               // console.log(response.data.filename);
+               // console.log(this.state.filename);
+                this.setState({"timestamp":response.data.timestamp});
+               // console.log(this.state.timestamp);
+                this.setState({"processingType":response.data.processing_type});
+               // console.log(this.state.processingType);
+                this.setState({"metrics":response.data.metrics});
+               // console.log(this.state.metrics);
+                var processedImg = [this.state.img_extension];
+               // console.log(this.state.img_extension);
+                processedImg.push("base64,");
+               // console.log(processedImg);
+                processedImg.push(response.data.base_64_processed);
+               // console.log(response.data.base_64_processed);
+               // console.log(processedImg);
+                var img = processedImg.join("");
+                this.setState({"processedImg":img});
+               // console.log(this.state.processedImg);
+                this.setState({"duration":response.data.processing_duration});
+               // console.log(this.state.duration)
           })
             .catch(function (error) {
              console.log(error);
            });
-       }
+       }}}
   
       
   
@@ -125,11 +128,11 @@ export default class App extends Component {
          return [];
       } else {
         var min_max = this.state.metrics[1];
-        console.log(min_max);
+        //console.log(min_max);
         var min = min_max[0];
-        console.log(min);
+       // console.log(min);
         var max = min_max[1];
-        console.log(max);
+       // console.log(max);
       }
 
     tabledata.push(
