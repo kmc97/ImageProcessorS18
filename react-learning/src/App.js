@@ -83,7 +83,7 @@ export default class App extends Component {
    // }
 }
 
-
+//Let's see if we can get this to work
       GetData = () => {
         if (this.state.currentImageString === undefined) {
           return []
