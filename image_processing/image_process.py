@@ -1,7 +1,7 @@
 import numpy as np 
 from PIL import Image
 from skimage import exposure
-from image_processing.manipulate_image import pic_to_numpy
+from manipulate_image import pic_to_numpy
 import datetime
 import logging
 
