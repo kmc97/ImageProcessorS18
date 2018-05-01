@@ -23,6 +23,7 @@ def test_pic_metrics():
 def test_process_time():
     # makes sure to take difference of the times
     t1 = time_now()
+    time.sleep(.2)
     duration = process_time(t1)
     assert(duration > 0)
 
