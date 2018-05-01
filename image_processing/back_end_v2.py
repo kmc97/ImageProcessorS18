@@ -2,9 +2,9 @@ import logging
 
 logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
 
-from manipulate_image import string_to_image, pic_to_numpy, numpy_to_pic, check_b64, image_to_b64, check_image_input, check_UUID_input
-from image_process import convert_gray, contrast_stretching, pic_metrics, time_now, process_time, adaptive_equalization, histogram_equalization, invert, time_now, log_compress
-from Histogram import pic_histo, display_histogram
+from image_processing.manipulate_image import string_to_image, pic_to_numpy, numpy_to_pic, check_b64, image_to_b64, check_image_input, check_UUID_input
+from image_processing.image_process import convert_gray, contrast_stretching, pic_metrics, time_now, process_time, adaptive_equalization, histogram_equalization, invert, time_now, log_compress
+from image_processing.Histogram import pic_histo, display_histogram
 
 def process_contrast_stretch(UUID, b64_string, export_file_type):
     

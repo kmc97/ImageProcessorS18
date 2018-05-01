@@ -3,6 +3,7 @@ from flask_cors import CORS
 from pymodm import MongoModel, fields, connect
 import models
 from models import return_entry, add_file
+import logging
 
 from image_processing.back_end_v2 import process_contrast_stretch, process_adapt_equalization,\
     process_histogram_equalization, process_reverse_image, process_log_compression
@@ -15,8 +16,16 @@ CORS(app)
 connect("mongodb://localhost:27017/imageprocessor")
 
 
+logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
+
+
 @app.route('/imageprocessor/original_image', methods=['POST'])
 def original_image():
+
+    """ ORIGINAL_IMAGE Function takes the input from the user (the file name, base64 encoded image, image processing
+        type, and export file type), performs the desired image processing on the image and saves the base 64 encoded
+        processed image, file name, image metrics, duration of processing to the database. """
+
     info = []
     num_pixels = []
     pic_size = []
@@ -37,9 +46,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
-        return jsonify({"info": info[0]})
+        info[6] = info[6].decode("utf-8")
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
+        logging.info('Image processed with contrast stretching')
 
     if image_proc_type == "adaptive equalization":
         info = process_adapt_equalization(name, b64_string, export_file_type)
@@ -48,9 +57,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
-
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        info[6] = info[6].decode("utf-8")
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
+        logging.info('Image processed with adaptive equalization')
 
     if image_proc_type == "histogram equalization":
         info = process_histogram_equalization(name, b64_string, export_file_type)
@@ -59,9 +68,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
-
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        info[6] = info[6].decode("utf-8")
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
+        logging.info('Image processed with histogram equalization')
 
     if image_proc_type == "reverse video":
         info = process_reverse_image(name, b64_string, export_file_type)
@@ -70,9 +79,9 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
-
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
+        info[6] = info[6].decode("utf-8")
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
+        logging.info('Image processed with reverse image')
 
     if image_proc_type == "log compression":
         info = process_log_compression(name, b64_string, export_file_type)
@@ -81,17 +90,22 @@ def original_image():
         pic_size = metrics_list[1]
         avg_value = metrics_list[2]
         metrics_output = [num_pixels, pic_size, avg_value]
-        info[5] = info[5].decode("utf-8")
+        info[6] = info[6].decode("utf-8")
+        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
+        logging.info('Image processed with log compression')
 
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[5])
-
-#    print_this = {"base64": info[2]}
     return jsonify("it worked")
-
 
 
 @app.route('/imageprocessor/original_image/getthedata/<filename>', methods=['GET'])
 def get_data(filename):
+
+    """ GET_DATA Function takes in the file name of the image and returns a .json file containing the file name,
+    timestamp, image processing type, image processing duration, image metrics, and the base 64 encoded processed image.
+        :param filename: Name of the file containing the processed image.
+        :returns jsonify(output): A .json file containing the file name,
+    timestamp, image processing type, image processing duration, image metrics, and the base 64 encoded processed image."""
+
     data = return_entry(filename)
     output = {
         "filename": data[0],
@@ -100,53 +114,12 @@ def get_data(filename):
         "processing_duration": data[3],
         "metrics": data[4],
         "base_64_processed": data[5]
-        #"output": return_entry('testing')
     }
+
     return jsonify(output)
-
-
-"""@app.route('/imageprocessor/processed_image', methods=['POST'])
-def processed_image():
-    r = request.get_json()
-    name_p = r["file_name_p"]
-    timestamp = r["timestamp"]
-    image_p_type = r["image_p_type"]
-    duration = r["duration"]
-    metrics = r["metrics"]
-    base64_image_p = r["base_64_p"]
-
-    y = jsonify({'file_name_p': name_p, 'timestamp': timestamp, 'image_p_type': image_p_type, 'duration': duration,
-                 'metrics': metrics, 'base_64_p': base64_image_p})
-
-    return y"""
-
-
-
-
-
-"""def image_type(image_proc_type):
-
-    a = original_image()
-    if image_proc_type == "contrast stretching":
-        info = process_contrast_stretch(a[0], a[1], a[3])
-    # if image_proc_type == "adaptive equalization":
-    #    info = process_adapt_equalization(a[0], a[1], a[4])
-    # if image_proc_type == "histogram equalization":
-     #   info = process_histogram_equalization(a[0], a[1], a[4])
-    # if image_proc_type == "reverse video":
-      #  info = process_reverse_image(a[0], a[1], a[4])
-    # if image_proc_type == "log compression":
-      #  info = process_log_compression(a[0], a[1], a[4])
-    # else:
-      #  print("invalid input")
-        return info
-
-
-a = original_image()
-
-image_type(a[2])"""
 
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1")
+    app.run(debug=True)
 
