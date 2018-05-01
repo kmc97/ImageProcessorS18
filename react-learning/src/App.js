@@ -6,7 +6,7 @@ import Methods from "./Methods.js";
 import Identifier from "./Identifier.js";
 import axios from 'axios';
 import Button from 'material-ui/Button';
-import Table, { TableCell, TableRow, TableHead} from 'material-ui/Table';
+import Table, { TableCell, TableRow, TableHead, TableBody} from 'material-ui/Table';
 import TextField from "material-ui/TextField";
 
 export default class App extends Component {
@@ -121,7 +121,7 @@ export default class App extends Component {
     if (this.state.processedData === undefined) {
       return [];
       } else {
-        for (var i=0; i<this.state.processedData.length; i++){
+       /* for (var i=0; i<this.state.processedData.length; i++){
             console.log(this.state.processedData.length);
             var data = this.state.processedData[i];
             var metrics = data.metrics;
@@ -129,7 +129,8 @@ export default class App extends Component {
 
             var timestamp = data.timestamp;
             var duration = data.processing_duration;
-      
+            var filename = data.filename;
+
             var tabledata = [];
             if (metrics[1] === undefined) {
                 return [];
@@ -138,39 +139,82 @@ export default class App extends Component {
                 var min = min_max[0];
                 var max = min_max[1];
             }
-
+    */
+        var tabledata = [];
     tabledata.push(
-        <div>
-        <TableRow>
-            <TableCell> Time Stamp </TableCell>
-            <TableCell> {timestamp} </TableCell>
-        </TableRow>
-        <TableRow>
-            <TableCell> Duration </TableCell>
-            <TableCell> {duration} </TableCell>
-        </TableRow>
-        <TableRow>
-            <TableCell> Pixels  </TableCell>
-            <TableCell> {metrics[0]} </TableCell>
-        </TableRow>
-        <TableRow>
-            <TableCell> Minimum </TableCell>
-            <TableCell> {min} </TableCell>
-        </TableRow>
-        <TableRow>
-            <TableCell> Maximum </TableCell>
-            <TableCell> {max} </TableCell>
-        </TableRow>
-        <TableRow>
-            <TableCell> Average </TableCell>
-            <TableCell> {metrics[2]} </TableCell>
-        </TableRow>
-        </div>
+        <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell> Metrics  </TableCell>
+                    
+                    {this.state.processedData.map(element => {
+                          return ( 
+                            <TableCell> {element.filename} </TableCell>
+                        )
+                        })
+                    }
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                <TableRow>
+                     <TableCell> Time Stamp  </TableCell> 
+                     {this.state.processedData.map(element => {
+                           return (
+                             <TableCell> {element.timestamp} </TableCell>
+                         )
+                         })
+                     }
+                 </TableRow>
+                
+                <TableRow>
+                    <TableCell> Processing Duration </TableCell>
+                    {this.state.processedData.map(element => {
+                        return (
+                          <TableCell> {element.processing_duration} </TableCell>
+                    )})}
+                </TableRow>
+
+                <TableRow>
+                      <TableCell> Pixels </TableCell>
+                      {
+                        this.state.processedData.map(element => {
+                        return (
+                          <TableCell> {element.metrics} </TableCell>
+                      )})}
+                </TableRow>
+                
+                <TableRow>
+                        <TableCell> Average </TableCell>
+                        {this.state.processedData.map(element => {
+                          return (
+                            <TableCell> {element.metrics} </TableCell>
+                        )})}
+                </TableRow>
+
+                <TableRow>
+                        <TableCell> X dimension </TableCell>
+                            {this.state.processedData.map(element => {
+                          return (
+                            <TableCell> {element.metrics} </TableCell>
+                        )})}
+                </TableRow>
+
+                <TableRow> 
+                          <TableCell> Y Dimension </TableCell>
+                          {this.state.processedData.map(element => {
+                            return (
+                              <TableCell> {element.metric} </TableCell>
+                          )})}
+                </TableRow>
+
+
+            </TableBody>
+        </Table>
       );
     
     return tabledata;
   }}
-  };
+  
 
   DisplayOriginalImages = () => {
     var Images = this.state.currentImageString;
@@ -198,21 +242,40 @@ export default class App extends Component {
        } else {
          var P_Img = [];
          for (var i=0; i<this.state.processedData.length; i++) {
-           
+         console.log("data:image/" + this.state.export_file_type +
+           ";base64,"+ this.state.processedData[i].base_64_processed);
+
            P_Img.push(
-           <img src = {this.state.img_extension + " base64," + this.state.processedData[i].base_64_processed}
+           <img src = {"data:image/" + this.state.export_file_type + ";base64,"
+             + this.state.processedData[i].base_64_processed}
                  height = {"50%"}
                  width = {"50%"}
            />
          )}
      return P_Img
    }}
-  
+ /* 
   getUrl = () => {
-    var imgPath = this.state.processedImg.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
-    this.setState({"imgPath":imgPath}, ()  => {window.open(this.state.imgPath)});
-  }
-  
+    if (this.state.processedData === undefined) {
+        return [];
+        } else {
+          var imgPaths = [];
+          for (var i=0; i<this.state.processedData.length; i++) {
+            var img = this.state.processedData[i].base_64_processed;
+            var imgPath = img.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
+    imgPaths.push(imgPath), ()  => {window.open(imgPaths)};
+  }}}
+  */
+  /*  getUrl = () => {
+        this.processedData.map(element => {
+            var processedImg = element.base_64_processed;
+            var imgPath = processedImg.replace(/^data:image\/[^;]+/,
+              'data:application/octet-stream');
+            this.setState({"imgPath":imgPath});
+            console.log(this.state.imgPath), () =>  {window.open(this.state.imgPath)}
+    }}
+*/
+
   render() {
     var tabledata = this.createTable();
     var OriginalImg = this.DisplayOriginalImages();
@@ -226,7 +289,7 @@ export default class App extends Component {
             <Identifier onIdentifierChange={this.onIdentifierChange} /> 
             <Methods onMethodsChange={this.onMethodsChange}/>
             
-            <div> Choose a file type to download(.jpg, .tiff, .png) </div>
+            <div> Choose a file type to download(.jpg or .png) </div>
  
              <TextField
                  value={this.state.export_file_type}
@@ -264,15 +327,8 @@ export default class App extends Component {
                 Picture Metrics 
             </div>
          </div>
-        <Table>
-                <TableHead>
-                    <TableRow> 
-                        <TableCell> Metrics </TableCell>
-                        <TableCell> Filename </TableCell>
-                    </TableRow>
-                </TableHead> 
-                {tabledata}
-        </Table>
+         <div> {tabledata} </div>
+        
         
         <Button variant='raised' onClick={this.getUrl}>
             Save
