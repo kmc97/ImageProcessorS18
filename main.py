@@ -4,12 +4,7 @@ from pymodm import MongoModel, fields, connect
 import models
 from models import return_entry, add_file
 import logging
-
-from image_processing.back_end_v2 import process_contrast_stretch, process_adapt_equalization,\
-    process_histogram_equalization, process_reverse_image, process_log_compression
-
-import numpy as np
-import base64
+from processed_add import add_processed_image, check_proc_type
 
 app = Flask(__name__)
 CORS(app)
@@ -34,66 +29,14 @@ def original_image():
     r = request.get_json()
     name = r["file_name"]
     b64_string = r["base_64"]
-#    b64_string = b64_string[0]
     image_proc_type = r["image_proc_type"]
     export_file_type = r["export_file_type"]
     b64_string = b64_string.encode("utf-8")
+    check_proc_type(image_proc_type)
 
-    if image_proc_type == "contrast stretching":
-        info = process_contrast_stretch(name, b64_string, export_file_type)
-        metrics_list = list(info[4])
-        num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
-        info[6] = info[6].decode("utf-8")
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
-        logging.info('Image processed with contrast stretching')
+    add_processed_image(image_proc_type, name, b64_string, export_file_type)
 
-    if image_proc_type == "adaptive equalization":
-        info = process_adapt_equalization(name, b64_string, export_file_type)
-        metrics_list = list(info[4])
-        num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
-        info[6] = info[6].decode("utf-8")
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
-        logging.info('Image processed with adaptive equalization')
-
-    if image_proc_type == "histogram equalization":
-        info = process_histogram_equalization(name, b64_string, export_file_type)
-        metrics_list = list(info[4])
-        num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
-        info[6] = info[6].decode("utf-8")
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
-        logging.info('Image processed with histogram equalization')
-
-    if image_proc_type == "reverse video":
-        info = process_reverse_image(name, b64_string, export_file_type)
-        metrics_list = list(info[4])
-        num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
-        info[6] = info[6].decode("utf-8")
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
-        logging.info('Image processed with reverse image')
-
-    if image_proc_type == "log compression":
-        info = process_log_compression(name, b64_string, export_file_type)
-        metrics_list = list(info[4])
-        num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
-        info[6] = info[6].decode("utf-8")
-        add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
-        logging.info('Image processed with log compression')
-
+    logging.info('Image added to database')
     return jsonify("it worked")
 
 
@@ -116,6 +59,7 @@ def get_data(filename):
         "base_64_processed": data[5]
     }
 
+    logging.info('Processed image, image data ouput in a .json file')
     return jsonify(output)
 
 
