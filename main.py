@@ -21,11 +21,6 @@ def original_image():
         type, and export file type), performs the desired image processing on the image and saves the base 64 encoded
         processed image, file name, image metrics, duration of processing to the database. """
 
-    info = []
-    num_pixels = []
-    pic_size = []
-    avg_value = []
-
     r = request.get_json()
     name = r["file_name"]
     b64_string = r["base_64"]
