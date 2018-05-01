@@ -6,7 +6,7 @@ import Methods from "./Methods.js";
 import Identifier from "./Identifier.js";
 import axios from 'axios';
 import Button from 'material-ui/Button';
-import Table, { TableCell, TableRow} from 'material-ui/Table';
+import Table, { TableCell, TableRow, TableHead} from 'material-ui/Table';
 import TextField from "material-ui/TextField";
 
 export default class App extends Component {
@@ -54,25 +54,25 @@ export default class App extends Component {
             return []
         } else {
         for (var i=0; i<this.state.currentImageString.length; i++) {
-           try{throw i}
-            catch(ii) {
+          try{throw i}
+          catch(ii) {
             var url = "http://127.0.0.1:5000/imageprocessor/original_image";
             var Img = {};
             var Img  = this.state.currentImageString[ii];
-            console.log(ii);
+           // console.log(ii);
             console.log(Img);
             var Img_bs64 = Img.bs64;
             Img_bs64 = Img_bs64.split('base64,');
             var originalImg = Img_bs64[1];
             var img_extension = Img_bs64[0];
+            console.log(img_extension);
             var imgName = this.state.Identifier + Img.name;
             var imgNames = [];
             imgNames = this.state.imgNames;
             imgNames.push(imgName);
             this.setState({"imgNames":imgNames});
             console.log(this.state.imgNames);
-            this.setState({"img_extension":img_extension});
-            
+            this.setState({"img_extension":img_extension}, () => {console.log(this.state.img_extension)}); 
             var body = {
                 "image_proc_type": this.state.methods,
                 "file_name": imgName,
@@ -94,75 +94,64 @@ export default class App extends Component {
           return []
         } else {
           for (var i=0; i<this.state.imgNames.length; i++) {
+            try{throw i}
+            catch(j) {
             console.log(this.state.imgNames);
-            var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.imgNames[i]
+            var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.imgNames[j]
             axios.get(url).then( (response) => {
                 console.log(response);
                 console.log(response.status);
                 console.log(response.data);
-                var newData = {};
+                var newData = [];
                 var newData = this.state.processedData;
                 newData.push(response.data)
                 this.setState({"processedData":newData});
                 console.log(this.state.processedData);
                 
-              /*
-                this.setState({"filename":response.data.filename});
-               // console.log(response.data.filename);
-               // console.log(this.state.filename);
-                this.setState({"timestamp":response.data.timestamp});
-               // console.log(this.state.timestamp);
-                this.setState({"processingType":response.data.processing_type});
-               // console.log(this.state.processingType);
-                this.setState({"metrics":response.data.metrics});
-               // console.log(this.state.metrics);
-                var processedImg = [this.state.img_extension];
-               // console.log(this.state.img_extension);
-                processedImg.push("base64,");
-               // console.log(processedImg);
-                processedImg.push(response.data.base_64_processed);
-               // console.log(response.data.base_64_processed);
-               // console.log(processedImg);
-                var img = processedImg.join("");
-                this.setState({"processedImg":img});
-               // console.log(this.state.processedImg);
-                this.setState({"duration":response.data.processing_duration});
-               // console.log(this.state.duration)
-          */
           })
             .catch(function (error) {
              console.log(error);
            });
-       }}}
+       }}}}
   
       
   
+
   createTable = () => {
-    var tabledata = [];
-    if (this.state.metrics[1] === undefined) {
-         return [];
+    if (this.state.processedData === undefined) {
+      return [];
       } else {
-        var min_max = this.state.metrics[1];
-        //console.log(min_max);
-        var min = min_max[0];
-       // console.log(min);
-        var max = min_max[1];
-       // console.log(max);
-      }
+        for (var i=0; i<this.state.processedData.length; i++){
+            console.log(this.state.processedData.length);
+            var data = this.state.processedData[i];
+            var metrics = data.metrics;
+            console.log(metrics);
+
+            var timestamp = data.timestamp;
+            var duration = data.processing_duration;
+      
+            var tabledata = [];
+            if (metrics[1] === undefined) {
+                return [];
+            } else {
+                var min_max = metrics[1];
+                var min = min_max[0];
+                var max = min_max[1];
+            }
 
     tabledata.push(
         <div>
         <TableRow>
             <TableCell> Time Stamp </TableCell>
-            <TableCell> {this.state.timestamp} </TableCell>
+            <TableCell> {timestamp} </TableCell>
         </TableRow>
         <TableRow>
             <TableCell> Duration </TableCell>
-            <TableCell> {this.state.duration} </TableCell>
+            <TableCell> {duration} </TableCell>
         </TableRow>
         <TableRow>
             <TableCell> Pixels  </TableCell>
-            <TableCell> {this.state.metrics[0]} </TableCell>
+            <TableCell> {metrics[0]} </TableCell>
         </TableRow>
         <TableRow>
             <TableCell> Minimum </TableCell>
@@ -174,15 +163,16 @@ export default class App extends Component {
         </TableRow>
         <TableRow>
             <TableCell> Average </TableCell>
-            <TableCell> {this.state.metrics[2]} </TableCell>
+            <TableCell> {metrics[2]} </TableCell>
         </TableRow>
         </div>
       );
     
     return tabledata;
+  }}
   };
 
-  DisplayImages = () => {
+  DisplayOriginalImages = () => {
     var Images = this.state.currentImageString;
     var Img = [];
     if (this.state.currentImageString === undefined) {
@@ -201,6 +191,22 @@ export default class App extends Component {
         )}
     return Img
   }}
+
+   DisplayProcessedImages = () => {
+     if (this.state.processedData === undefined) {
+       return [];
+       } else {
+         var P_Img = [];
+         for (var i=0; i<this.state.processedData.length; i++) {
+           
+           P_Img.push(
+           <img src = {this.state.img_extension + " base64," + this.state.processedData[i].base_64_processed}
+                 height = {"50%"}
+                 width = {"50%"}
+           />
+         )}
+     return P_Img
+   }}
   
   getUrl = () => {
     var imgPath = this.state.processedImg.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
@@ -209,7 +215,8 @@ export default class App extends Component {
   
   render() {
     var tabledata = this.createTable();
-    var Img = this.DisplayImages();
+    var OriginalImg = this.DisplayOriginalImages();
+    var P_Img = this.DisplayProcessedImages();
 
     return (
       <div>
@@ -248,19 +255,22 @@ export default class App extends Component {
                 Original Image 
             </h2>
             
-            <div> {Img} </div>
+            <div> {OriginalImg} </div>
 
             <h2> Processed Image </h2>
-            <img src={this.state.processedImg}
-                height = {"50%"}
-                width = {"50%"}
-                />
+            <div> {P_Img} </div>
 
             <div style={{marginTop: '30px'}}> 
                 Picture Metrics 
             </div>
          </div>
         <Table>
+                <TableHead>
+                    <TableRow> 
+                        <TableCell> Metrics </TableCell>
+                        <TableCell> Filename </TableCell>
+                    </TableRow>
+                </TableHead> 
                 {tabledata}
         </Table>
         
