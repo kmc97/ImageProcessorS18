@@ -254,7 +254,7 @@ export default class App extends Component {
          )}
      return P_Img
    }}
- /* 
+  
   getUrl = () => {
     if (this.state.processedData === undefined) {
         return [];
@@ -262,17 +262,22 @@ export default class App extends Component {
           var imgPaths = [];
           for (var i=0; i<this.state.processedData.length; i++) {
             var img = this.state.processedData[i].base_64_processed;
+            console.log(img);
             var imgPath = img.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
-    imgPaths.push(imgPath), ()  => {window.open(imgPaths)};
+            console.log(imgPath);
+            imgPaths.push(imgPath), ()  => {window.open(imgPaths)};
+            return 
   }}}
-  */
+  
   /*  getUrl = () => {
         this.processedData.map(element => {
             var processedImg = element.base_64_processed;
             var imgPath = processedImg.replace(/^data:image\/[^;]+/,
               'data:application/octet-stream');
             this.setState({"imgPath":imgPath});
-            console.log(this.state.imgPath), () =>  {window.open(this.state.imgPath)}
+            console.log(this.state.imgPath)
+            
+           // , () =>  {window.open(this.state.imgPath)}
     }}
 */
 
