@@ -1,5 +1,5 @@
 # ImageProcessorS18
-BME590 Final Project : Image Processor for Medical Software Design
+## BME590 Final Project : Image Processor for Medical Software Design
 
 [![Build Status](https://travis-ci.org/kmc97/ImageProcessorS18.svg?branch=master)](https://travis-ci.org/kmc97/ImageProcessorS18)
 
