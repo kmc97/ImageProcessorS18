@@ -179,7 +179,7 @@ export default class App extends Component {
                       {
                         this.state.processedData.map(element => {
                         return (
-                          <TableCell> {element.metrics} </TableCell>
+                          <TableCell> {element.metrics[0]} </TableCell>
                       )})}
                 </TableRow>
                 
@@ -203,7 +203,7 @@ export default class App extends Component {
                           <TableCell> Y Dimension </TableCell>
                           {this.state.processedData.map(element => {
                             return (
-                              <TableCell> {element.metric} </TableCell>
+                              <TableCell> {element.metrics} </TableCell>
                           )})}
                 </TableRow>
 
