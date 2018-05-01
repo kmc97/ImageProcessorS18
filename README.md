@@ -12,3 +12,6 @@ The input is the original images from the user and the output is the processed i
 
 ## General Information
 This service allows a user to upload a photo or multiple photos to a front end website and then have the option to choose various image processing methods to edit the photo. On the backend side, the server stores the images along with other useful data such as the timestamp, time taken to process the image and some basic image metrics like size, number of pixels, etc. The image processing methods available to the user are histogram equalization, contrast stretching, log compression and reverse video. In addition, a histogram of the original image and the processed image will be generated.
+
+### Link to the RFC:
+https://docs.google.com/document/d/1vcsbcqEtvKBKNdxcELAXiufVeGS2ZW9HNsqf_1FsJRI/edit#
