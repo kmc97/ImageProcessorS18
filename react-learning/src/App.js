@@ -23,7 +23,8 @@ export default class App extends Component {
       "processingType":"",
       "img_extension":"",
       "imgPath":"",
-      "imgName":""
+      "imgNames":[],
+      "processedData":[]
     }
   }
 
@@ -53,19 +54,23 @@ export default class App extends Component {
             return []
         } else {
         for (var i=0; i<this.state.currentImageString.length; i++) {
-           // try{throw i}
-           // catch(ii) {
-            var url = "http://127.0.0.1:5000/imageiprocessor/original_image";
+           try{throw i}
+            catch(ii) {
+            var url = "http://127.0.0.1:5000/imageprocessor/original_image";
             var Img = {};
-            var Img  = this.state.currentImageString[i];
-            console.log(i);
+            var Img  = this.state.currentImageString[ii];
+            console.log(ii);
             console.log(Img);
             var Img_bs64 = Img.bs64;
             Img_bs64 = Img_bs64.split('base64,');
             var originalImg = Img_bs64[1];
             var img_extension = Img_bs64[0];
             var imgName = this.state.Identifier + Img.name;
-           // this.setState({"imgName":imgName});
+            var imgNames = [];
+            imgNames = this.state.imgNames;
+            imgNames.push(imgName);
+            this.setState({"imgNames":imgNames});
+            console.log(this.state.imgNames);
             this.setState({"img_extension":img_extension});
             
             var body = {
@@ -80,7 +85,7 @@ export default class App extends Component {
             console.log(response);
           });
             }}
-   // }
+    }
 }
 
 
@@ -88,11 +93,20 @@ export default class App extends Component {
         if (this.state.currentImageString === undefined) {
           return []
         } else {
-          for (var i=0; i<this.state.currentImageString.length; i++) {
-            var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.imgName;
+          for (var i=0; i<this.state.imgNames.length; i++) {
+            console.log(this.state.imgNames);
+            var url = "http://127.0.0.1:5000/imageprocessor/original_image/getthedata/" + this.state.imgNames[i]
             axios.get(url).then( (response) => {
                 console.log(response);
                 console.log(response.status);
+                console.log(response.data);
+                var newData = {};
+                var newData = this.state.processedData;
+                newData.push(response.data)
+                this.setState({"processedData":newData});
+                console.log(this.state.processedData);
+                
+              /*
                 this.setState({"filename":response.data.filename});
                // console.log(response.data.filename);
                // console.log(this.state.filename);
@@ -114,6 +128,7 @@ export default class App extends Component {
                // console.log(this.state.processedImg);
                 this.setState({"duration":response.data.processing_duration});
                // console.log(this.state.duration)
+          */
           })
             .catch(function (error) {
              console.log(error);
