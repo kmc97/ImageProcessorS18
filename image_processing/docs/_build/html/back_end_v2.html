@@ -1,0 +1,144 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>back_end_v2 module &#8212; Image Processing  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-back_end_v2">
+<span id="back-end-v2-module"></span><h1>back_end_v2 module<a class="headerlink" href="#module-back_end_v2" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="back_end_v2.process_adapt_equalization">
+<code class="descclassname">back_end_v2.</code><code class="descname">process_adapt_equalization</code><span class="sig-paren">(</span><em>UUID</em>, <em>b64_string</em>, <em>export_file_type</em><span class="sig-paren">)</span><a class="headerlink" href="#back_end_v2.process_adapt_equalization" title="Permalink to this definition">¶</a></dt>
+<dd><p>ADAPTIVE EQUALIZATION Function takes in Unique ID and b64 image string, adaptively equalizes the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image with the histogram
+:param UUID: Alphanumeric User input, unique identifier where file will be pulled
+:param b64_string:  Recieved from front-end, contains b64 of desired image
+:param export_file_type: User input of desired file type
+:raises TypeError:  From check_b64,if input data is not base64
+:returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, type of image processing, duration of processing, image metrics and the b64 string of the preprocessed and processed image with the histogram</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="back_end_v2.process_contrast_stretch">
+<code class="descclassname">back_end_v2.</code><code class="descname">process_contrast_stretch</code><span class="sig-paren">(</span><em>UUID</em>, <em>b64_string</em>, <em>export_file_type</em><span class="sig-paren">)</span><a class="headerlink" href="#back_end_v2.process_contrast_stretch" title="Permalink to this definition">¶</a></dt>
+<dd><p>CONTRAST STRETCHING Function takes in Unique ID and b64 image string, contrast stretches the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image
+:param UUID: Alphanumeric User input, unique identifier where file will be pulled
+:param b64_string:  Recieved from front-end, contains b64 of desired image
+:param export_file_type: User input of desired file type
+:raises TypeError:  From check_b64,if input data is not base64
+:returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the preprocesed and processed image with the histogram</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="back_end_v2.process_histogram_equalization">
+<code class="descclassname">back_end_v2.</code><code class="descname">process_histogram_equalization</code><span class="sig-paren">(</span><em>UUID</em>, <em>b64_string</em>, <em>export_file_type</em><span class="sig-paren">)</span><a class="headerlink" href="#back_end_v2.process_histogram_equalization" title="Permalink to this definition">¶</a></dt>
+<dd><p>HISTOGRAM EQUALIZATION Function takes in Unique ID and b64 image string, histogram equalizes the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image
+:param UUID: Alphanumeric User input, unique identifier where file will be pulled
+:param b64_string:  Recieved from front-end, contains b64 of desired image
+:param export_file_type: User input of desired file type
+:raises TypeError: From check_b64, raises error if input is not base64
+:returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the preprocessed and processed image with the histogram</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="back_end_v2.process_log_compression">
+<code class="descclassname">back_end_v2.</code><code class="descname">process_log_compression</code><span class="sig-paren">(</span><em>UUID</em>, <em>b64_string</em>, <em>export_file_type</em><span class="sig-paren">)</span><a class="headerlink" href="#back_end_v2.process_log_compression" title="Permalink to this definition">¶</a></dt>
+<dd><p>LOG COMPRESSION Function takes in Unique ID and b64 image string, and inverts the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image with the histogram
+:param UUID: Alphanumeric User input, unique identifier where file will be pulled
+:param b64_string:  Recieved from front-end, contains b64 of desired image
+:param export_file_type: User input of desired file type
+:raises TypeError: From check_b64, if input data is not base64
+:raises ValueError: From check_image_input(), if not .jpg, .png, tiff
+:returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the preprocessed and processed image with the histogram</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="back_end_v2.process_reverse_image">
+<code class="descclassname">back_end_v2.</code><code class="descname">process_reverse_image</code><span class="sig-paren">(</span><em>UUID</em>, <em>b64_string</em>, <em>export_file_type</em><span class="sig-paren">)</span><a class="headerlink" href="#back_end_v2.process_reverse_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>REVERSE VIDEO function takes in Unique ID and b64 image string, and inverts the image and outputs the Unique ID, time it took to process the image, image metrics and the b64 of the edited image with the histogram
+:param UUID: Alphanumeric User input, unique identifier where file will be pulled
+:param b64_string:  Recieved from front-end, contains b64 of desired image
+:param export_file_type: User input of desired file type
+:raises TypeError: From check_b64, if input data is not base64
+:raises ValueError: From check_image_input(), if not .jpg, .png, tiff
+:returns b64_processed: A list containing: the unique identifier, timestamp, type of image processing, duration of processing, image metrics and the b64 string of the pre processed and processed image with the histogram</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/back_end_v2.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Deepti, Souhaila, Katie.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/back_end_v2.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
