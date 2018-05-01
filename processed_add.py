@@ -13,9 +13,10 @@ def add_processed_image(image_proc_type, name, b64_string, export_file_type):
         info = process_contrast_stretch(name, b64_string, export_file_type)
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
+        x_coord = metrics_list[1]
+        y_coord = metrics_list[2]
+        avg_value = metrics_list[3]
+        metrics_output = [num_pixels, x_coord, y_coord, avg_value]
         info[6] = info[6].decode("utf-8")
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
         logging.info('Image processed with contrast stretching')
@@ -24,9 +25,10 @@ def add_processed_image(image_proc_type, name, b64_string, export_file_type):
         info = process_adapt_equalization(name, b64_string, export_file_type)
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
+        x_coord = metrics_list[1]
+        y_coord = metrics_list[2]
+        avg_value = metrics_list[3]
+        metrics_output = [num_pixels, x_coord, y_coord, avg_value]
         info[6] = info[6].decode("utf-8")
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
         logging.info('Image processed with adaptive equalization')
@@ -35,9 +37,10 @@ def add_processed_image(image_proc_type, name, b64_string, export_file_type):
         info = process_histogram_equalization(name, b64_string, export_file_type)
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
+        x_coord = metrics_list[1]
+        y_coord = metrics_list[2]
+        avg_value = metrics_list[3]
+        metrics_output = [num_pixels, x_coord, y_coord, avg_value]
         info[6] = info[6].decode("utf-8")
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
         logging.info('Image processed with histogram equalization')
@@ -46,9 +49,10 @@ def add_processed_image(image_proc_type, name, b64_string, export_file_type):
         info = process_reverse_image(name, b64_string, export_file_type)
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
+        pic_x_coord = metrics_list[1]
+        y_coord = metrics_list[2]
+        avg_value = metrics_list[3]
+        metrics_output = [num_pixels, x_coord, y_coord, avg_value]
         info[6] = info[6].decode("utf-8")
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
         logging.info('Image processed with reverse image')
@@ -57,9 +61,10 @@ def add_processed_image(image_proc_type, name, b64_string, export_file_type):
         info = process_log_compression(name, b64_string, export_file_type)
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
-        pic_size = metrics_list[1]
-        avg_value = metrics_list[2]
-        metrics_output = [num_pixels, pic_size, avg_value]
+        x_coord = metrics_list[1]
+        y_coord = metrics_list[2]
+        avg_value = metrics_list[3]
+        metrics_output = [num_pixels, x_coord, y_coord, avg_value]
         info[6] = info[6].decode("utf-8")
         add_file(info[0], info[1], info[2], info[3], metrics_output, info[6])
         logging.info('Image processed with log compression')
