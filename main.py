@@ -4,13 +4,13 @@ from pymodm import MongoModel, fields, connect
 import models
 from models import return_entry, add_file
 
-from image_processing.back_end_v2 import process_contrast_stretch, process_adapt_equalization,\
-    process_histogram_equalization, process_reverse_image, process_log_compression
+from back_end_v2 import process_contrast_stretch, process_adapt_equalization,process_histogram_equalization, process_reverse_image, process_log_compression
 
 import numpy as np
 import base64
 
 app = Flask(__name__)
+app.debug = True
 CORS(app)
 connect("mongodb://localhost:27017/imageprocessor")
 
