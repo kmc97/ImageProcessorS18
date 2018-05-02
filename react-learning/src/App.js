@@ -9,6 +9,7 @@ import Button from 'material-ui/Button';
 import Table, { TableCell, TableRow, TableHead, TableBody} from 'material-ui/Table';
 import TextField from "material-ui/TextField";
 
+
 export default class App extends Component {
   constructor() {
     super();
@@ -265,21 +266,12 @@ export default class App extends Component {
             console.log(img);
             var imgPath = img.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
             console.log(imgPath);
-            imgPaths.push(imgPath), ()  => {window.open(imgPaths)};
-            return 
-  }}}
-  
-  /*  getUrl = () => {
-        this.processedData.map(element => {
-            var processedImg = element.base_64_processed;
-            var imgPath = processedImg.replace(/^data:image\/[^;]+/,
-              'data:application/octet-stream');
-            this.setState({"imgPath":imgPath});
-            console.log(this.state.imgPath)
+            imgPaths.push(imgPath)}
+          for (var i=0; i<imgPaths.length; i++) {
+            window.open(imgPaths[i])}
+        }}
             
-           // , () =>  {window.open(this.state.imgPath)}
-    }}
-*/
+
 
   render() {
     var tabledata = this.createTable();
@@ -338,6 +330,8 @@ export default class App extends Component {
         <Button variant='raised' onClick={this.getUrl}>
             Save
         </Button>
+
+        <Button id="download-btn" date-files={this.state.imgPath}> Download </Button>
     </div>
     )
   }
