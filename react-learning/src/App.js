@@ -60,7 +60,6 @@ export default class App extends Component {
             var url = "http://127.0.0.1:5000/imageprocessor/original_image";
             var Img = {};
             var Img  = this.state.currentImageString[ii];
-           // console.log(ii);
             console.log(Img);
             var Img_bs64 = Img.bs64;
             Img_bs64 = Img_bs64.split('base64,');
@@ -122,25 +121,6 @@ export default class App extends Component {
     if (this.state.processedData === undefined) {
       return [];
       } else {
-       /* for (var i=0; i<this.state.processedData.length; i++){
-            console.log(this.state.processedData.length);
-            var data = this.state.processedData[i];
-            var metrics = data.metrics;
-            console.log(metrics);
-
-            var timestamp = data.timestamp;
-            var duration = data.processing_duration;
-            var filename = data.filename;
-
-            var tabledata = [];
-            if (metrics[1] === undefined) {
-                return [];
-            } else {
-                var min_max = metrics[1];
-                var min = min_max[0];
-                var max = min_max[1];
-            }
-    */
         console.log(this.state.processedData);
         console.log(this.state.processedData[0]);
         var tabledata = [];
@@ -191,7 +171,7 @@ export default class App extends Component {
                         {this.state.processedData.map(element => {
                           console.log(element)
                           return (
-                            <TableCell> {element.metrics[0].toString()} </TableCell>
+                            <TableCell> {element.metrics[3].toString()} </TableCell>
                         )})}
                 </TableRow>
 
@@ -228,9 +208,6 @@ export default class App extends Component {
      } else {
 
     for (var i=0; i<this.state.currentImageString.length; i++) {
-       // console.log(this.state.currentImageString.length);
-       // console.log(this.state.currentImageString[0]);
-       // console.log(this.state.currentImageString[1]);
         Img.push(
           <img src= {this.state.currentImageString[i].bs64} 
                 height = {"50%"} 
