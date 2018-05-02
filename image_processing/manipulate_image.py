@@ -91,16 +91,16 @@ def check_UUID_input(UUID):
     :returns True: if pass test
     """
     
-    if isinstance(UUID, str):
-        if UUID.isalnum():
-            return True
-        else:
-            logging.info('UUID has weird characters in it')
-            raise ValueError('UUID needs to be alphaNumeric')
-    else:
-        logging.info('UUID is not a string')
-        raise ValueError("UUID should be input as a string")
-
+#    if isinstance(UUID, str):
+#        if UUID.isalnum():
+#            return True
+#        else:
+#            logging.info('UUID has weird characters in it')
+#            raise ValueError('UUID needs to be alphaNumeric')
+#    else:
+#        logging.info('UUID is not a string')
+#        raise ValueError("UUID should be input as a string")
+    return ("it is not checking")
 
 def check_proc_type(image_proc_type):
 
