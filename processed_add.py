@@ -58,7 +58,7 @@ def add_processed_image(image_proc_type, name, b64_string, export_file_type):
         info = process_reverse_image(name, b64_string, export_file_type)
         metrics_list = list(info[4])
         num_pixels = metrics_list[0]
-        pic_x_coord = metrics_list[1]
+        x_coord = metrics_list[1]
         y_coord = metrics_list[2]
         avg_value = metrics_list[3]
         metrics_output = [num_pixels, x_coord, y_coord, avg_value]
