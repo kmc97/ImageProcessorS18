@@ -21,8 +21,9 @@ https://docs.google.com/document/d/1vcsbcqEtvKBKNdxcELAXiufVeGS2ZW9HNsqf_1FsJRI/
 <img src="Screen Shot 2018-05-02 at 12.51.24 PM.png" height="500px"/> 
 
 ### Example Processed Images:
-<img src="Screen Shot 2018-05-02 at 12.50.29 PM.png" height="500px"/> 
-<img src="Screen Shot 2018-05-02 at 12.50.42 PM.png" height="500px"/> 
-<img src="Screen Shot 2018-05-02 at 12.50.49 PM.png" height="500px"/> 
+Orignal images show a MRI image of a UCL pre and post processing using contrast stretching. 
+<img src="UCL Original Images.png" height="500px"/> 
+<img src="UCL Processed Images - Contrast Stretching.png" height="500px"/> 
+<img src="UCL -contrast stretching - metrics.png" height="500px"/> 
 
 
