@@ -266,15 +266,16 @@ export default class App extends Component {
           var imgPaths = [];
          for (var i=0; i<this.state.processedData.length; i++) 
         {  
-          var img = this.state.processedData[i].base_64_processed;
-            console.log(img);
-          //  var imgPath = img.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
-           // console.log(imgPath);
+          var img = "data:image/" + this.state.export_file_type + ";base64,"
+          + this.state.processedData[i].base_64_processed;
+            //console.log(img);
+             var imgPath = img.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
+            console.log(imgPath);
             imgPaths.push(img)
             console.log(imgPaths[0]);    
         }
           for (var i=0; i<imgPaths.length; i++) {
-            window.open(imgPaths[i],'_blank')};
+            window.open(imgPaths[i])};
         }}
             
 
@@ -337,7 +338,6 @@ export default class App extends Component {
             Save
         </Button>
 
-        <Button id="download-btn" date-files={this.state.imgPath}> Download </Button>
     </div>
     )
   }
