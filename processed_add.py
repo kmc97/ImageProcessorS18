@@ -2,7 +2,7 @@ from flask import Flask, request, Response, jsonify
 from models import return_entry, add_file
 import logging
 
-from image_processing.back_end_v2 import process_contrast_stretch, process_adapt_equalization,\
+from back_end_v2 import process_contrast_stretch, process_adapt_equalization,\
     process_histogram_equalization, process_reverse_image, process_log_compression
 
 logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', datefmt ='%m/%d/%Y &I:%M:%S %p', level=logging.DEBUG)
