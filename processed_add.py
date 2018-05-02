@@ -11,7 +11,7 @@ logging.basicConfig(filename='logging.txt', format='%(asctime)s %(message)s', da
 def add_processed_image(image_proc_type, name, b64_string, export_file_type):
 
     """ The Add Processed Image function takes in the different parameters of the original image of the image, adds them
-    to a database, and returns a .json file
+    to a database, and returns a .json file.
             :param image_proc_type: Type of image processing technique
             :param name: The name of the file to be processed
             :param b64_string: The b64 encoded version of the original image

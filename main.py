@@ -39,7 +39,7 @@ def original_image():
 def get_data(filename):
 
     """ GET_DATA Function takes in the file name of the image and returns a .json file containing the file name,
-    timestamp, image processing type, image processing duration, image metrics, and the base 64 encoded processed image.
+    timestamp, image processing type, image processing duration, image metrics, and the base 64 encoded processed image
         :param filename: Name of the file containing the processed image.
         :returns jsonify(output): A .json file containing the file name,
     timestamp, image processing type, image processing duration, image metrics, and the base 64 encoded processed image."""
