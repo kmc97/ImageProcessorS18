@@ -141,6 +141,8 @@ export default class App extends Component {
                 var max = min_max[1];
             }
     */
+        console.log(this.state.processedData);
+        console.log(this.state.processedData[0]);
         var tabledata = [];
     tabledata.push(
         <Table>
@@ -187,8 +189,9 @@ export default class App extends Component {
                 <TableRow>
                         <TableCell> Average </TableCell>
                         {this.state.processedData.map(element => {
+                          console.log(element)
                           return (
-                            <TableCell> {element.metrics} </TableCell>
+                            <TableCell> {element.metrics[0].toString()} </TableCell>
                         )})}
                 </TableRow>
 
@@ -196,7 +199,7 @@ export default class App extends Component {
                         <TableCell> X dimension </TableCell>
                             {this.state.processedData.map(element => {
                           return (
-                            <TableCell> {element.metrics} </TableCell>
+                            <TableCell> {element.metrics[1].toString()} </TableCell>
                         )})}
                 </TableRow>
 
@@ -204,7 +207,7 @@ export default class App extends Component {
                           <TableCell> Y Dimension </TableCell>
                           {this.state.processedData.map(element => {
                             return (
-                              <TableCell> {element.metrics} </TableCell>
+                              <TableCell> {element.metrics[2].toString()} </TableCell>
                           )})}
                 </TableRow>
 
@@ -261,14 +264,17 @@ export default class App extends Component {
         return [];
         } else {
           var imgPaths = [];
-          for (var i=0; i<this.state.processedData.length; i++) {
-            var img = this.state.processedData[i].base_64_processed;
+         for (var i=0; i<this.state.processedData.length; i++) 
+        {  
+          var img = this.state.processedData[i].base_64_processed;
             console.log(img);
-            var imgPath = img.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
-            console.log(imgPath);
-            imgPaths.push(imgPath)}
+          //  var imgPath = img.replace(/^data:image\/[^;]+/,'data:application/octet-stream');
+           // console.log(imgPath);
+            imgPaths.push(img)
+            console.log(imgPaths[0]);    
+        }
           for (var i=0; i<imgPaths.length; i++) {
-            window.open(imgPaths[i])}
+            window.open(imgPaths[i],'_blank')};
         }}
             
 
